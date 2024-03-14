@@ -1,5 +1,4 @@
 # Front End hotel reservation website
-(works in progress)
 
 ## Frameworks & Languages: ## 
 ReactJS, TailwindCSS
