@@ -13,3 +13,5 @@ The project features Home, Our Hotel, Reservation, and Orders pages.
 ## Mobile-First & Responsive Design: ## 
 The website adheres to the mobile-first priciples to provide comfortable user-friendly experience on screens of a diverse range of sizes: phones, tablets, and desktops.  
 
+## Screenshots ##
+![GitHub Logo](https://github.com/nchernys/hotel-lake/blob/main/about_hotel.jpg)
