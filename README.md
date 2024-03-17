@@ -17,9 +17,8 @@ The project features Home, Our Hotel, Reservation, and YourReservation, and Admi
 The website adheres to the mobile-first priciples to provide comfortable user-friendly experience on screens of a diverse range of sizes: phones, tablets, and desktops.  
 
 ## Screenshots ##
-<img width="200" src="https://github.com/nchernys/hotel-lake/blob/main/about_hotel.jpg" alt="about_hotel">
-![GitHub Logo]()
-![GitHub Logo](https://github.com/nchernys/hotel-lake/blob/main/room_reservation_page.jpg)
-![GitHub Logo](https://github.com/nchernys/hotel-lake/blob/main/guest_reservations.png)
-![GitHub Logo](https://github.com/nchernys/hotel-lake/blob/main/invoice_pdf.png)
+<img width="400" src="[https://github.com/nchernys/hotel-lake/blob/main/about_hotel.jpg" alt="about_hotel](https://github.com/nchernys/hotel-lake/blob/main/about_hotel.jpg" alt="about_hotel])">
+<img width="400" src="[https://github.com/nchernys/hotel-lake/blob/main/about_hotel.jpg" alt="about_hotel](https://github.com/nchernys/hotel-lake/blob/main/room_reservation_page.jpg)">
+<img width="400" src="[https://github.com/nchernys/hotel-lake/blob/main/about_hotel.jpg" alt="about_hotel](https://github.com/nchernys/hotel-lake/blob/main/guest_reservations.png)">
+<img width="400" src="[https://github.com/nchernys/hotel-lake/blob/main/about_hotel.jpg](https://github.com/nchernys/hotel-lake/blob/main/invoice_pdf.png)
 
