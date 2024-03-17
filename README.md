@@ -15,3 +15,7 @@ The website adheres to the mobile-first priciples to provide comfortable user-fr
 
 ## Screenshots ##
 ![GitHub Logo](https://github.com/nchernys/hotel-lake/blob/main/about_hotel.jpg)
+![GitHub Logo](https://github.com/nchernys/hotel-lake/blob/main/room_reservation_page.jpg)
+![GitHub Logo](https://github.com/nchernys/hotel-lake/blob/main/guest_reservations.png)
+![GitHub Logo](https://github.com/nchernys/hotel-lake/blob/main/invoice_pdf.png)
+
