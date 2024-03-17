@@ -17,7 +17,7 @@ The project features Home, Our Hotel, Reservation, and YourReservation, and Admi
 The website adheres to the mobile-first priciples to provide comfortable user-friendly experience on screens of a diverse range of sizes: phones, tablets, and desktops.  
 
 ## Screenshots ##
-<img width="400" src="https://github.com/nchernys/hotel-lake/blob/main/about_hotel.jpg" alt="about_hotel">
-<img width="400" src="https://github.com/nchernys/hotel-lake/blob/main/room_reservation_page.jpg" alt="about_hotel">
-<img width="400" src="https://github.com/nchernys/hotel-lake/blob/main/guest_reservations.png" alt="about_hotel">
-<img width="400" src="https://github.com/nchernys/hotel-lake/blob/main/invoice_pdf.png" alt="about_hotel">
+<img width="800" src="https://github.com/nchernys/hotel-lake/blob/main/about_hotel.jpg" alt="about_hotel">
+<img width="800" src="https://github.com/nchernys/hotel-lake/blob/main/room_reservation_page.jpg" alt="about_hotel">
+<img width="800" src="https://github.com/nchernys/hotel-lake/blob/main/guest_reservations.png" alt="about_hotel">
+<img width="800" src="https://github.com/nchernys/hotel-lake/blob/main/invoice_pdf.png" alt="about_hotel">
