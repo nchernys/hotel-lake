@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Calendar from "react-calendar";
 import "./index.css";
 
-function WebCalendar() {
+const WebCalendar = () => {
+  const { roomId, categoryId } = useParams();
+  const [showRoomId, setShowRoomId] = useState(roomId);
   const [orderedOn, setOrderedOn] = useState(new Date());
   const [moveinDate, setMoveinDate] = useState(new Date());
   const [moveoutDate, setMoveoutDate] = useState(new Date());
@@ -37,7 +40,7 @@ function WebCalendar() {
 
   useEffect(() => {
     const fetchRoom = async () => {
-      const response = await fetch(`/api/admin/rooms/65f3c1b35a4d83766b9fb912`);
+      const response = await fetch(`/api/admin/rooms/${showRoomId}`);
 
       if (!response.ok) {
         console.log("Response failed");
@@ -50,7 +53,7 @@ function WebCalendar() {
 
     fetchRoom();
 
-    const fetchDatesOccupied = async () => {
+    const fetchDatesOccupied = async (id) => {
       const response = await fetch("/api/admin/orders/");
 
       if (!response.ok) {
@@ -60,7 +63,7 @@ function WebCalendar() {
         console.log("ORDERS", data);
 
         const collectOrderForThisRoom = await data.filter(
-          (order) => order.roomId._id === "65f3c1b35a4d83766b9fb912"
+          (order) => order.roomId._id === showRoomId
         );
 
         let datesOccupied = [];
@@ -76,7 +79,7 @@ function WebCalendar() {
     };
 
     fetchDatesOccupied();
-  }, []);
+  }, [showRoomId]);
 
   const nightsOfStay = Math.ceil(
     (moveoutDate - moveinDate) / (1000 * 60 * 60 * 24)
@@ -171,6 +174,49 @@ function WebCalendar() {
     setIsMoveinSubmitted(false);
     setIsMoveoutSubmitted(false);
   };
+
+  const handlePrevious = async () => {
+    const roomsByCategory = await fetch(
+      `/api/admin/rooms/category/${showRoom.category}`
+    );
+    if (!roomsByCategory.ok) {
+      console.log("Failed to fetch rooms.");
+    } else {
+      const rooms = await roomsByCategory.json();
+      const currentIndex = rooms.findIndex((room) => room._id === showRoomId);
+      console.log("ROOMS, CURRENT INDEX", rooms, currentIndex);
+      let getIndex = 0;
+      if (currentIndex > 0) {
+        getIndex = currentIndex - 1;
+      } else if (currentIndex === 0) {
+        getIndex = rooms.length - 1;
+      }
+      const prevRoomId = rooms[getIndex]._id;
+      setShowRoomId(prevRoomId);
+    }
+  };
+
+  const handleNext = async () => {
+    const roomsByCategory = await fetch(
+      `/api/admin/rooms/category/${showRoom.category}`
+    );
+    if (!roomsByCategory.ok) {
+      console.log("Failed to fetch rooms.");
+    } else {
+      const rooms = await roomsByCategory.json();
+      const currentIndex = rooms.findIndex((room) => room._id === showRoomId);
+      console.log("ROOMS, CURRENT INDEX", rooms, currentIndex);
+      let getIndex = 0;
+      if (currentIndex === rooms.length - 1) {
+        getIndex = 0;
+      } else {
+        getIndex = currentIndex + 1;
+      }
+      const prevRoomId = rooms[getIndex]._id;
+      setShowRoomId(prevRoomId);
+    }
+  };
+
   return (
     <>
       {datesUnavailableAlert && (
@@ -222,7 +268,31 @@ function WebCalendar() {
         </div>
       )}
 
-      <div className="w-full sm:w-4/5 mx-auto mt-1 mb-14 p-5 box-border relative">
+      <div className="w-full  mx-auto mt-1 px-3 pb-20 mb-14 box-border sm:w-4/5">
+        <div className="flex w-full text-xl justify-between pt-5 pb-7 sm:text-lg">
+          <span
+            className="w-auto flex items-center opacity-25 cursor-pointer"
+            onClick={handlePrevious}
+          >
+            <img
+              className="w-4 h-4 me-3"
+              src="https://img.icons8.com/ios-filled/50/323b46e2/back.png"
+              alt="back"
+            />
+            Previous
+          </span>
+          <span
+            className="w-auto  flex items-center opacity-25 cursor-pointer"
+            onClick={handleNext}
+          >
+            Next{" "}
+            <img
+              className="w-4 h-4 ms-3"
+              src="https://img.icons8.com/ios-filled/50/323b46e2/forward--v1.png"
+              alt="forward"
+            />
+          </span>
+        </div>
         {showRoom && (
           <>
             <h1 className=" text-xl sm:text-3xl mx-3 mb-5 font-bold flex justify-between flex-col sm:flex-row sm:items-end">
@@ -232,11 +302,11 @@ function WebCalendar() {
               </span>
             </h1>
             <div className="gallery flex w-full h-full flex-col sm:flex-row">
-              <div className="w-full p-b-70% p-3 overflow-hidden relative sm:w-2/3 sm:p-b-20%">
+              <div className="w-full p-3 overflow-hidden sm:w-2/3 ">
                 <img
-                  className="object-cover absolute"
-                  src={showRoom.pictures[photoView]}
-                  alt="room112"
+                  className="object-cover "
+                  src={`/${showRoom.pictures[photoView]}`}
+                  alt={`${showRoom.pictures[photoView]}`}
                 />
               </div>
               <div className="w-full h-full p-3 flex flex-wrap items-start justify-between sm:w-1/3">
@@ -248,7 +318,7 @@ function WebCalendar() {
                   >
                     <img
                       className="w-full absolute top-0 left-0 "
-                      src={photo}
+                      src={`/${photo}`}
                       alt="room112"
                     />
                   </div>
@@ -280,7 +350,7 @@ function WebCalendar() {
               required
             />
             <div className="select-dates flex flex-col sm:flex-row">
-              <div className="calendar-container w-full my-1 p-8 sm:me-6 sm:mt-5 h-auto bg-slate-500 text-white text-sm sm:text-base sm:w-9/12 md:w-8/12 lg:w-1/2">
+              <div className="calendar-container w-full my-5 p-5 sm:me-6 sm:mt-5 h-auto bg-slate-500 text-white text-sm sm:text-base sm:w-9/12 md:w-8/12 lg:w-1/2">
                 <Calendar
                   selectRange={true}
                   value={selectedRange}
@@ -420,7 +490,7 @@ function WebCalendar() {
       </div>
     </>
   );
-}
+};
 
 export default WebCalendar;
 

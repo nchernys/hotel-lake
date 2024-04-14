@@ -45,9 +45,8 @@ const addNewOrder = async (req, res) => {
 
 const getThisOrder = async (req, res) => {
   const { id } = req.params;
-
   try {
-    const thisOrder = Room.findById({ _id: id });
+    const thisOrder = await Order.findById({ _id: id }).populate("roomId");
     res.status(200).json(thisOrder);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -56,9 +55,28 @@ const getThisOrder = async (req, res) => {
 
 const deleteThisOrder = async (req, res) => {
   const { id } = req.params;
+
   try {
     const thisOrder = await Order.findByIdAndDelete({ _id: id });
     res.status(200).json({ message: "Item was deleted." });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const isCompleted = async (req, res) => {
+  const { id } = req.params;
+  const { isCompleted } = req.body;
+
+  try {
+    const thisOrder = await Order.findOneAndUpdate(
+      { _id: id },
+      { isCompleted },
+      { new: true }
+    );
+
+    thisOrder.save();
+    res.status(200).json(thisOrder);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -77,7 +95,7 @@ const updateThisOrder = async (req, res) => {
     numOfNights,
   } = req.body;
   try {
-    const thisOrder = await Room.findByIdAndUpdate(
+    const thisOrder = await Order.findByIdAndUpdate(
       id,
       {
         guestFirstName,
@@ -105,4 +123,5 @@ module.exports = {
   getThisOrder,
   deleteThisOrder,
   updateThisOrder,
+  isCompleted,
 };

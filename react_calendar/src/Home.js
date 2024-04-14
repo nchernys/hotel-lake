@@ -16,7 +16,7 @@ const Home = () => {
           </div>
           <div className="overflow-hidden">
             <div className="title-word-4 mt-20 w-60 py-4 text-3xl flex justify-center bg-blue-400 sm:text-5xl sm:font-normal sm:w-96 sm:py-7 ">
-              <Link to="/reserve">Book a room</Link>
+              <Link to="/choose-room">Book a room</Link>
             </div>
           </div>
         </div>
@@ -25,7 +25,7 @@ const Home = () => {
             <div className="home-text">
               <div className="home-text-subheading">
                 <div>
-                  <Link to="/reserve">Book today!</Link>
+                  <Link to="/choose-room">Book today!</Link>
                 </div>
               </div>
             </div>

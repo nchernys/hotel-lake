@@ -5,6 +5,7 @@ const multer = require("multer");
 require("dotenv").config();
 const roomsRoutes = require("./routes/roomsRoutes");
 const roomCategoriesRoutes = require("./routes/roomCategoriesRoutes");
+const featuresRoutes = require("./routes/featuresRoutes");
 const ordersRoutes = require("./routes/ordersRoutes");
 
 const app = express();
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 
 app.use("/api/admin/rooms", roomsRoutes);
 app.use("/api/admin/categories", roomCategoriesRoutes);
+app.use("/api/admin/features", featuresRoutes);
 app.use("/api/admin/orders", ordersRoutes);
 
 mongoose

@@ -19,6 +19,7 @@ const {
   getThisRoom,
   deleteThisRoom,
   updateThisRoom,
+  getRoomsByCategory,
 } = require("../controllers/roomsControllers");
 
 router.post("/", upload.array("pictures", 10), addNewRoom);
@@ -33,5 +34,6 @@ router.patch(
   ]),
   updateThisRoom
 );
+router.get("/category/:id", getRoomsByCategory);
 
 module.exports = router;

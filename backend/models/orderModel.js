@@ -31,6 +31,10 @@ const orderSchema = new Schema(
     totalToPay: {
       type: Number,
     },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

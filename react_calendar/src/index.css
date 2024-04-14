@@ -5,11 +5,13 @@
 html,
 body {
   width: 100%;
-  height: auto;
+  height: 100%;
   margin: 0;
   padding: 0;
   font-size: 14px;
   color: #323b46e2;
+  box-sizing: border-box;
+  scrollbar-gutter: stable both-edges;
 }
 
 #root {
@@ -51,7 +53,7 @@ body {
 }
 
 .home-image {
-  background: url("../public/images/hotel/hotel-home-5.jpg") no-repeat;
+  background: url("../public/images/hotel/hotel-home-5-1-ex-3.jpg") no-repeat;
   background-size: cover;
   background-position: center;
   width: 100vw;

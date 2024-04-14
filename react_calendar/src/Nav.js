@@ -17,11 +17,8 @@ function Navigation() {
 
   return (
     <>
-      <header className="py-2 px-8 text-lg hidden justify-between  sm:flex">
+      <header className="py-2 px-8 text-lg hidden justify-between sm:flex">
         <div className="flex items-center">
-          <div className="me-10">
-            <img width="50" height="50" src="./icons/hotel-logo.png" />
-          </div>
           <div className="me-10">
             <Link to="/">Home</Link>
           </div>
@@ -29,7 +26,7 @@ function Navigation() {
             <Link to="/about">Our Hotel</Link>
           </div>
           <div className="me-10">
-            <Link to="/reserve">Room Reservation</Link>
+            <Link to="/choose-room"> Room Reservation </Link>
           </div>
           <div className="me-10">
             <Link to="/orders">Orders</Link>
@@ -41,10 +38,7 @@ function Navigation() {
           </div>
         </div>
       </header>
-      <header className="py-2 px-4 text-lg flex justify-between items-center sm:hidden">
-        <p className="">
-          <img width="50" height="50" src="./icons/hotel-logo.png" />
-        </p>
+      <header className="py-2 px-4 text-lg flex justify-end items-center sm:hidden">
         <div className="relative text-2xl">
           <div onClick={handleMenu}> {menuShow ? "Close" : "Menu"}</div>
           <div
@@ -63,8 +57,8 @@ function Navigation() {
               </Link>
             </div>
             <div className="p-10 border-b-2 text-center">
-              <Link to="/reserve" onClick={handleLinkClick}>
-                Reservation
+              <Link to="/choose-room" onClick={handleLinkClick}>
+                Choose Room
               </Link>
             </div>
             <div className="p-10 border-b-2 text-center">

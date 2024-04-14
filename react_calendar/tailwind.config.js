@@ -16,6 +16,7 @@ module.exports = {
       },
       height: {
         "20%": "20%",
+        lobby: "calc(100vh/1.8)",
       },
       spacing: {
         "b-20%": "0 0 20% 0",

@@ -92,10 +92,23 @@ const updateThisRoom = async (req, res) => {
   }
 };
 
+const getRoomsByCategory = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const roomsByCategory = await Room.find({ category: id });
+    console.log("ROOMS BY CAT", roomsByCategory);
+    res.status(200).json(roomsByCategory);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAllRooms,
   addNewRoom,
   getThisRoom,
   deleteThisRoom,
   updateThisRoom,
+  getRoomsByCategory,
 };
