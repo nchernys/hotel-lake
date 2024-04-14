@@ -1,7 +1,7 @@
-# Front End hotel reservation website
+# Hotel reservation website (personal project)
 
 ## Frameworks & Languages: ## 
-ReactJS, TailwindCSS
+ReactJS, ExpressJS, NodeJS, MongoDB, Tailwind CSS
 ## Project Pages: ## 
 The project features Home, Our Hotel, Reservation, and YourReservation, and Admin Dashboard pages.  
 ## Custom Features: ## 
