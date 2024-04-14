@@ -11,7 +11,19 @@ body {
   font-size: 14px;
   color: #323b46e2;
   box-sizing: border-box;
-  scrollbar-gutter: stable both-edges;
+  overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+  width: 0; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+
+body {
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+body {
+  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
 }
 
 #root {

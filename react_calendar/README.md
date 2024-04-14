@@ -1,70 +1,23 @@
-# Getting Started with Create React App
+# Front End hotel reservation website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Frameworks & Languages: ## 
+ReactJS, TailwindCSS
+## Project Pages: ## 
+The project features Home, Our Hotel, Reservation, and YourReservation, and Admin Dashboard pages.  
+## Custom Features: ## 
++ The website relies on the React **Routing** to navigate between the pages.
++ The hotel room description features a custom **picture gallery** with the main view and the previews.
++ The React **`<Calendar />` component** shows the dates disabled for the date when the room had already been reserved. 
++ The reservation form uses the React **`<Calendar />` component** to choose move-in and move-out dates.
++ The logic calculates both the **number of nights** and **the total cost** for staying in the selected room.
++ The Admin Dashboard enables the admins to view, add, update, delete hotel rooms details and guest reservations.
++ The admin dhasboard generates an invoice for each order in the **PDF** format.  
+  
+## Mobile-First & Responsive Design: ## 
+The website adheres to the mobile-first priciples to provide comfortable user-friendly experience on screens of a diverse range of sizes: phones, tablets, and desktops.  
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Screenshots ##
+<img width="800" src="https://github.com/nchernys/hotel-lake/blob/main/about_hotel.jpg" alt="about_hotel">
+<img width="800" src="https://github.com/nchernys/hotel-lake/blob/main/room_reservation_page.jpg" alt="about_hotel">
+<img width="800" src="https://github.com/nchernys/hotel-lake/blob/main/guest_reservations.png" alt="about_hotel">
+<img width="800" src="https://github.com/nchernys/hotel-lake/blob/main/invoice_pdf.png" alt="about_hotel">

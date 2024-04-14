@@ -62,7 +62,7 @@ const ChooseRoom = () => {
         />
       </div>
 
-      <div className="w-full sm:w-4/5 mx-auto mt-1 mb-5 p-3 box-border relative ">
+      <div className="w-full sm:w-4/5 mx-auto mt-1 mb-5 p-3 box-border relative scrolling">
         <div className="flex flex-col w-9/12 h-full mx-auto flex-wrap justify-between my-0 sm:w-10/12 sm:flex-row sm:my-5">
           {categories.map((category) => (
             <div key={category._id} className="flex flex-col py-1 category-box">

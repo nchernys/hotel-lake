@@ -126,13 +126,17 @@ const GuestsOrders = () => {
                   <tr>
                     <td className="py-5">
                       <span
-                        className="py-5 me-2"
+                        className="py-5 me-2 cursor-pointer"
+                        title="Edit functionality is being developed!"
                         onClick={() => handleEditOrder(order._id)}
                       >
                         {" "}
                         Edit
                       </span>
-                      <span onClick={() => handleDeleteOrder(order._id)}>
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => handleDeleteOrder(order._id)}
+                      >
                         Delete
                       </span>
                     </td>
