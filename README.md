@@ -1,4 +1,4 @@
-# Hotel reservation website (personal project)
+# Hotel reservation project
 
 ## Frameworks & Languages: ## 
 ReactJS, ExpressJS, NodeJS, MongoDB, Tailwind CSS
