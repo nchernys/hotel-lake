@@ -25,13 +25,11 @@ jobs:
         cd react_calendar
         npm install
         npm run build
-      working-directory: ${{ github.workspace }}/react_calendar
 
     - name: Install backend dependencies
       run: |
         cd backend
         npm install
-      working-directory: ${{ github.workspace }}/backend
     - name: Deploy to VPS
       uses: appleboy/ssh-action@master
       with:
