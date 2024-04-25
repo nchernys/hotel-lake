@@ -205,7 +205,6 @@ const WebCalendar = () => {
     } else {
       const rooms = await roomsByCategory.json();
       const currentIndex = rooms.findIndex((room) => room._id === showRoomId);
-      console.log("ROOMS, CURRENT INDEX", rooms, currentIndex);
       let getIndex = 0;
       if (currentIndex === rooms.length - 1) {
         getIndex = 0;

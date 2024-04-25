@@ -36,3 +36,7 @@ mongoose
   });
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "../react_calendar/build", "index.html"));
+});
