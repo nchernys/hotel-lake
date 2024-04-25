@@ -46,7 +46,6 @@ const UploadCategory = () => {
       console.log("Category upload failed.");
     } else {
       const data = await response.json();
-      console.log("Category added", data);
       setNameCategory("");
       allCats();
     }
@@ -80,7 +79,6 @@ const UploadCategory = () => {
       console.log("Feature upload failed.");
     } else {
       const data = await response.json();
-      console.log("Feature added", data);
       setNameFeature("");
       allFeatures();
     }

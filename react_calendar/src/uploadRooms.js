@@ -46,7 +46,6 @@ const UploadRooms = () => {
       console.log("Failed to upload a new room.", response.statusText);
     } else {
       const data = await response.json();
-      console.log(data);
     }
 
     navigate("/admin/all-rooms");

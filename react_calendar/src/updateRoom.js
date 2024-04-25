@@ -39,7 +39,6 @@ const UpdateRoom = () => {
         setPrice(data.price);
         setCategory(data.category);
         setExistingPictures(data.pictures);
-        console.log(data.pictures);
       }
     };
 
@@ -48,7 +47,6 @@ const UpdateRoom = () => {
 
   const handleFormSubmission = async (e) => {
     e.preventDefault();
-    console.log("SAVED PICS", existingPictures, newPictures);
     const updateRoom = new FormData();
     updateRoom.append("name", name);
     updateRoom.append("description", description);
@@ -72,7 +70,6 @@ const UpdateRoom = () => {
       console.log("Failed to update the room details.", response.statusText);
     } else {
       const data = await response.json();
-      console.log(data);
       navigate("/admin/all-rooms");
     }
   };
@@ -80,7 +77,6 @@ const UpdateRoom = () => {
   const handleDeletePicture = async (index) => {
     const newPicArray = existingPictures.filter((pic, ind) => ind !== index);
     setExistingPictures(newPicArray);
-    console.log("NEW ARRAY DELETE", newPicArray);
   };
 
   return (

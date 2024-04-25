@@ -47,7 +47,6 @@ const WebCalendar = () => {
       } else {
         const data = await response.json();
         setShowRoom(data);
-        console.log(data);
       }
     };
 
@@ -60,7 +59,6 @@ const WebCalendar = () => {
         console.log("Failed to fetch the order");
       } else {
         const data = await response.json();
-        console.log("ORDERS", data);
 
         const collectOrderForThisRoom = await data.filter(
           (order) => order.roomId._id === showRoomId
@@ -69,12 +67,10 @@ const WebCalendar = () => {
         let datesOccupied = [];
         collectOrderForThisRoom.forEach((order) => {
           const occupied = range(order.dateMoveIn, order.dateMoveOut);
-          console.log(occupied);
           datesOccupied = datesOccupied.concat(occupied);
         });
 
         setRangeOfDatesOccupied(datesOccupied);
-        console.log("DATES OCCUPIED", datesOccupied);
       }
     };
 
@@ -125,7 +121,6 @@ const WebCalendar = () => {
         console.log("Failed to create an order.");
       } else {
         const data = await createOrder.json();
-        console.log("Order created.", data);
       }
 
       setReservationSubmitted(true);
@@ -161,7 +156,6 @@ const WebCalendar = () => {
 
     setUnavailableDatesRange(unavailableDates);
 
-    console.log("UNAVAILABLE DATES RANGE", unavailableDates);
     if (unavailableDates.length > 0) {
       setDatesUnavailableAlert(true);
     }
@@ -184,7 +178,6 @@ const WebCalendar = () => {
     } else {
       const rooms = await roomsByCategory.json();
       const currentIndex = rooms.findIndex((room) => room._id === showRoomId);
-      console.log("ROOMS, CURRENT INDEX", rooms, currentIndex);
       let getIndex = 0;
       if (currentIndex > 0) {
         getIndex = currentIndex - 1;
