@@ -2,9 +2,9 @@ name: Hotel Project CI/CD
 
 on:
   push:
-    branches: [working_branch]
+    branches: [master]
   pull_request:
-    branches: [working_branch]
+    branches: [master]
 
 jobs:
   build:
@@ -38,7 +38,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         script: |
           cd /home/natasha/hotel-lake
-          git pull origin working_branch
+          git pull origin master
           cd react_calendar
             npm install
             npm run build 
