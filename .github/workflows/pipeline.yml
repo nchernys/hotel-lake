@@ -31,6 +31,11 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         script: |
           cd /home/natasha/hotel-lake
-          git pull origin main
-          npm install
-          pm2 restart all
+          git pull origin working_branch
+          cd react_calendar
+            npm install
+            npm run build 
+          cd ..
+          cd backend
+            npm install
+          pm2 restart hotel-lake
