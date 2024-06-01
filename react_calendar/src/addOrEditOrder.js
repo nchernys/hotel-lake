@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { DateTime } from "luxon";
 
 const OrderForm = () => {
   const { id } = useParams();
@@ -59,10 +60,10 @@ const OrderForm = () => {
 
   const handleTotalPriceUpdateDates = async () => {
     const difference =
-      new Date(updatedOrder.dateMoveOut) - new Date(updatedOrder.dateMoveIn);
-    const calcTotalToPay = Math.round(
-      updatedOrder.roomId.price * Math.round(difference / (1000 * 60 * 60 * 24))
-    );
+      new Date(updatedOrder.dateMoveOut).getDate() -
+      new Date(updatedOrder.dateMoveIn).getDate();
+
+    const calcTotalToPay = Math.round(updatedOrder.roomId.price * difference);
     setUpdatedOrder({
       ...updatedOrder,
       totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
@@ -143,7 +144,7 @@ const OrderForm = () => {
           onChange={(event) => {
             setUpdatedOrder({
               ...updatedOrder,
-              dateMoveIn: event.target.value,
+              dateMoveIn: DateTime.fromISO(event.target.value).toJSDate(),
             });
           }}
         />
@@ -155,8 +156,9 @@ const OrderForm = () => {
           onChange={(event) => {
             setUpdatedOrder({
               ...updatedOrder,
-              dateMoveOut: event.target.value,
+              dateMoveOut: DateTime.fromISO(event.target.value).toJSDate(),
             });
+            console.log();
           }}
         />
         <label className="my-1 py-2">Room</label>

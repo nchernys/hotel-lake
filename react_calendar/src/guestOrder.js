@@ -119,7 +119,7 @@ const Orders = () => {
                       <td>${order.roomId.price.toFixed(2)}</td>
                     </tr>
                     <tr>
-                      <td>Nights:</td>
+                      <td className="w-1/3 font-bold">Nights:</td>
                       <td>{nights}</td>
                     </tr>
                     <tr>
