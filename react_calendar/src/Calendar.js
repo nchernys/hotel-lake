@@ -25,6 +25,7 @@ const WebCalendar = () => {
   const [datesUnavailableAlert, setDatesUnavailableAlert] = useState(false);
   const [dateClicked, setDateClicked] = useState("");
   const [isStartOver, setIsStartOver] = useState(false);
+  const [newOrderCreated, setNewOrderCreated] = useState("");
 
   function range(start, stop) {
     const getRangeOfDates = [];
@@ -77,8 +78,8 @@ const WebCalendar = () => {
     fetchDatesOccupied();
   }, [showRoomId]);
 
-  const nightsOfStay = Math.ceil(
-    (moveoutDate - moveinDate) / (1000 * 60 * 60 * 24)
+  const nightsOfStay = Math.round(
+    (moveoutDate - moveinDate) / (1000 * 60 * 60 * 24) - 1
   );
   const totalToPay = showRoom.price * nightsOfStay;
 
@@ -92,12 +93,17 @@ const WebCalendar = () => {
       day: "numeric",
     };
 
-    const orderedOnSave = orderedOn.toLocaleDateString("en-US", options);
-    const selectedMoveinDate = moveinDate.toLocaleDateString("en-US", options);
-    const selectedMoveoutDate = moveoutDate.toLocaleDateString(
-      "en-US",
-      options
-    );
+    if (moveinDate && moveoutDate) {
+      const orderedOnSave = orderedOn.toLocaleDateString("en-US", options);
+      const selectedMoveinDate = moveinDate.toLocaleDateString(
+        "en-US",
+        options
+      );
+      const selectedMoveoutDate = moveoutDate.toLocaleDateString(
+        "en-US",
+        options
+      );
+    }
 
     if (firstName && lastName && moveinDate && moveoutDate) {
       const newOrder = {
@@ -108,8 +114,9 @@ const WebCalendar = () => {
         roomId: showRoom._id,
         dateMoveIn: moveinDate,
         dateMoveOut: moveoutDate,
-        numOfNights: nightsOfStay,
       };
+
+      setNewOrderCreated(newOrder);
 
       const createOrder = await fetch("/api/admin/orders", {
         method: "POST",
@@ -128,6 +135,8 @@ const WebCalendar = () => {
       setFirstName("");
       setLastName("");
       setSelectedRange([]);
+      setMoveinDate(null);
+      setMoveoutDate(null);
       setIsMoveinSubmitted(false);
       setIsMoveoutSubmitted(false);
     } else {
@@ -165,6 +174,8 @@ const WebCalendar = () => {
     setDateClicked("");
     setRangeToBook([]);
     setSelectedRange([]);
+    setMoveinDate(null);
+    setMoveoutDate(null);
     setIsMoveinSubmitted(false);
     setIsMoveoutSubmitted(false);
   };
@@ -241,8 +252,11 @@ const WebCalendar = () => {
           </div>
           <p className="text-center">
             Thank you for submitting your reservation! <br />
-            You can change or cancel your order on the{" "}
-            <Link to="/orders">Orders</Link> page.
+            You can make a payment on the{" "}
+            <Link to="/orders">
+              <u>Orders</u>
+            </Link>{" "}
+            page.
           </p>
         </div>
       )}
@@ -351,6 +365,7 @@ const WebCalendar = () => {
                   }}
                   onChange={handleSelectRange}
                   tileDisabled={({ date }) =>
+                    date < new Date() ||
                     rangeOfDatesOccupied.some(
                       (rangeDate) =>
                         rangeDate.getFullYear() === date.getFullYear() &&
@@ -359,12 +374,14 @@ const WebCalendar = () => {
                     )
                   }
                   tileClassName={({ date }) => {
-                    const isOccupied = rangeOfDatesOccupied.some(
-                      (rangeDate) =>
-                        rangeDate.getFullYear() === date.getFullYear() &&
-                        rangeDate.getMonth() === date.getMonth() &&
-                        rangeDate.getDate() === date.getDate()
-                    );
+                    const isOccupied =
+                      date < new Date() ||
+                      rangeOfDatesOccupied.some(
+                        (rangeDate) =>
+                          rangeDate.getFullYear() === date.getFullYear() &&
+                          rangeDate.getMonth() === date.getMonth() &&
+                          rangeDate.getDate() === date.getDate()
+                      );
                     if (isOccupied) {
                       return "date-unavailable";
                     }
@@ -392,43 +409,6 @@ const WebCalendar = () => {
                   Start over
                 </div>
               </div>
-              {/**
-              <div className="w-full my-1 sm:w-1/2 md:1/3 sm:me-6 sm:mt-5 h-auto bg-slate-500 text-white text-sm sm:text-base  calendar-container">
-                <p className="p-3">Move-out</p>
-                
-                <Calendar
-                  onChange={(newMoveoutDate) => {
-                    setMoveoutDate(newMoveoutDate);
-                    setIsMoveoutSubmitted(true);
-                  }}
-                  value={moveinDate}
-                  tileClassName={({ date }) =>
-                    isMoveoutSubmitted &&
-                    moveoutDate &&
-                    date.getTime() === moveoutDate.getTime()
-                      ? "date-focus"
-                      : rangeOfDatesOccupied.some(
-                          (rangeDate) =>
-                            rangeDate.getFullYear() === date.getFullYear() &&
-                            rangeDate.getMonth() === date.getMonth() &&
-                            rangeDate.getDate() === date.getDate()
-                        )
-                      ? "date-unavailable"
-                      : "date-focus-none"
-                  }
-                  tileDisabled={({ date }) =>
-                    rangeOfDatesOccupied.some(
-                      (rangeDate) =>
-                        rangeDate.getFullYear() === date.getFullYear() &&
-                        rangeDate.getMonth() === date.getMonth() &&
-                        rangeDate.getDate() === date.getDate()
-                    )
-                  }
-                  required
-                />
-              
-              </div>
-                      */}
             </div>
           </form>
 
@@ -444,12 +424,14 @@ const WebCalendar = () => {
                 <strong>Move-in date:</strong>{" "}
                 {isMoveinSubmitted &&
                   unavailableDatesRange.length === 0 &&
+                  moveinDate &&
                   moveinDate.toLocaleDateString("en-GB")}
               </p>
               <p className="invoice-cart my-1">
                 <strong>Move-out date:</strong>{" "}
                 {isMoveoutSubmitted &&
                   unavailableDatesRange.length === 0 &&
+                  moveoutDate &&
                   moveoutDate.toLocaleDateString("en-GB")}
               </p>
               <p className="invoice-cart my-1">

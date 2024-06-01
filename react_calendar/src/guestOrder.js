@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+const { format } = require("date-fns");
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [offerHoursLeft, setOfferHoursLeft] = useState("");
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -21,11 +24,46 @@ const Orders = () => {
           ordersWithDateObjects[ordersWithDateObjects.length - 1];
 
         setOrders([lastOrder]);
+        const createdAt = new Date(lastOrder.createdAt);
+        let offerExpired = new Date(createdAt);
+        offerExpired = offerExpired.setHours(createdAt.getHours() + 72);
+        const today = new Date();
+        let hoursLeft = (offerExpired - today) / (1000 * 60 * 60);
+        setOfferHoursLeft(Math.round(hoursLeft));
       }
     };
 
     fetchOrders();
   }, []);
+
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51PCuAZ09yFMm4KWFLPN8qPcbYDQwfYQvUuLZ12qtQStdNMJoLrd4GaIQ6CjW7QnaFIbEDPXUgtsYIeIOYkClLQk500nYejFsni"
+    );
+
+    const body = {
+      orders: orders,
+    };
+
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    const response = await fetch("/api/payment/", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(body),
+    });
+
+    const session = await response.json();
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error);
+    }
+  };
 
   return (
     <>
@@ -37,44 +75,74 @@ const Orders = () => {
           {!orders ? (
             <div className="my-10">You have not made any reservations yet.</div>
           ) : (
-            orders.map((order, index) => (
-              <table key={order._id} className="w-full my-10">
-                <thead></thead>
-                <tbody>
-                  <tr>
-                    <td className="w-1/3 font-bold">First name:</td>
-                    <td>{order.guestFirstName}</td>
-                  </tr>
-                  <tr>
-                    <td className="w-1/3 font-bold">Last name:</td>
-                    <td>{order.guestLastName}</td>
-                  </tr>
-                  <tr>
-                    <td className="w-1/3 font-bold">Room category:</td>
-                    <td>{order.categoryId.name}</td>
-                  </tr>
-                  <tr>
-                    <td className="w-1/3 font-bold">Room name:</td>
-                    <td>{order.roomId.name}</td>
-                  </tr>
-                  <tr>
-                    <td className="w-1/3 font-bold">Move-in date:</td>
-                    <td>{order.dateMoveIn}</td>
-                  </tr>
-                  <tr>
-                    <td className="w-1/3 font-bold">Move-out date:</td>
-                    <td>{order.dateMoveOut}</td>
-                  </tr>
-                  <tr>
-                    <td className="w-1/3 font-bold">Nights:</td>
-                    <td>{order.numOfNights}</td>
-                  </tr>
-                  <tr>
-                    <td className="w-1/3 font-bold">Total cost:</td>
-                    <td>${order.totalToPay.toFixed(2)}</td>
-                  </tr>
-                </tbody>
-              </table>
+            orders.map((order) => (
+              <>
+                <table key={order._id} className="w-full my-10">
+                  <thead></thead>
+                  <tbody>
+                    <tr>
+                      <td className="w-1/3 font-bold">First name:</td>
+                      <td>{order.guestFirstName}</td>
+                    </tr>
+                    <tr>
+                      <td className="w-1/3 font-bold">Last name:</td>
+                      <td>{order.guestLastName}</td>
+                    </tr>
+                    <tr>
+                      <td className="w-1/3 font-bold">Room category:</td>
+                      <td>{order.categoryId.name}</td>
+                    </tr>
+                    <tr>
+                      <td className="w-1/3 font-bold">Room name:</td>
+                      <td>{order.roomId.name}</td>
+                    </tr>
+                    <tr>
+                      <td className="w-1/3 font-bold">Move-in date:</td>
+                      <td>{order.dateMoveIn}</td>
+                    </tr>
+                    <tr>
+                      <td className="w-1/3 font-bold">Move-out date:</td>
+                      <td>{order.dateMoveOut}</td>
+                    </tr>
+                    <tr>
+                      <td className="w-1/3 font-bold">Price (night):</td>
+                      <td>${order.roomId.price.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                      <td className="w-1/3 font-bold">Total cost:</td>
+                      <td>${order.totalToPay.toFixed(2)}</td>
+                    </tr>
+
+                    <tr>
+                      <td className="w-1/3 font-bold">Booked on:</td>
+                      <td>
+                        {format(
+                          new Date(order.createdAt),
+                          "MMMM dd, yyyy HH:mm:ss"
+                        )}
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colSpan="2" className="pt-5 italic">
+                        {offerHoursLeft >= 0
+                          ? `Your offer will expire in ${offerHoursLeft} hours.`
+                          : "Your offer has expired."}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <button
+                  disabled={offerHoursLeft < 0 ? true : false}
+                  className={`py-2 w-32 px-3 text-white my-8 text-center rounded ${
+                    offerHoursLeft < 0 ? "bg-gray-400" : "bg-red-500"
+                  }`}
+                  onClick={makePayment}
+                >
+                  Payment
+                </button>
+              </>
             ))
           )}
         </div>

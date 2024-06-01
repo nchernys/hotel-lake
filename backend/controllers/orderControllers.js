@@ -34,7 +34,6 @@ const addNewOrder = async (req, res) => {
       roomId,
       dateMoveIn,
       dateMoveOut,
-      numOfNights,
     });
 
     res.status(200).json(newOrder);
@@ -57,26 +56,18 @@ const deleteThisOrder = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const thisOrder = await Order.findByIdAndDelete({ _id: id });
-    res.status(200).json({ message: "Item was deleted." });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
-const isCompleted = async (req, res) => {
-  const { id } = req.params;
-  const { isCompleted } = req.body;
-
-  try {
-    const thisOrder = await Order.findOneAndUpdate(
-      { _id: id },
-      { isCompleted },
-      { new: true }
-    );
-
-    thisOrder.save();
-    res.status(200).json(thisOrder);
+    if (
+      id === "65f55b69489c98a37c525e3c" ||
+      id === "65f56711fa0c8fe0257dabc6" ||
+      id === "65f61c4557af69fafcc8fcdc"
+    ) {
+      res.status(200).json({
+        message: "no-delete",
+      });
+    } else {
+      const thisOrder = await Order.findByIdAndDelete({ _id: id });
+      res.status(200).json({ message: "Item was deleted." });
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -92,26 +83,34 @@ const updateThisOrder = async (req, res) => {
     roomId,
     dateMoveIn,
     dateMoveOut,
-    numOfNights,
   } = req.body;
   try {
-    const thisOrder = await Order.findByIdAndUpdate(
-      id,
-      {
-        guestFirstName,
-        guestLastName,
-        totalToPay,
-        categoryId,
-        roomId,
-        dateMoveIn,
-        dateMoveOut,
-        numOfNights,
-      },
-      { new: true }
-    );
+    if (
+      id === "65f55b69489c98a37c525e3c" ||
+      id === "65f56711fa0c8fe0257dabc6" ||
+      id === "65f61c4557af69fafcc8fcdc"
+    ) {
+      res.status(200).json({
+        message: "no-edit",
+      });
+    } else {
+      const thisOrder = await Order.findByIdAndUpdate(
+        id,
+        {
+          guestFirstName,
+          guestLastName,
+          totalToPay,
+          categoryId,
+          roomId,
+          dateMoveIn,
+          dateMoveOut,
+        },
+        { new: true }
+      );
 
-    thisOrder.save();
-    res.status(200).json(thisOrder);
+      thisOrder.save();
+      res.status(200).json(thisOrder);
+    }
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -123,5 +122,4 @@ module.exports = {
   getThisOrder,
   deleteThisOrder,
   updateThisOrder,
-  isCompleted,
 };

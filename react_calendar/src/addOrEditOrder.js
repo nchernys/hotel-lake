@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const OrderForm = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
   const [roomSelected, setRoomSelected] = useState("");
   const [formattedDateMoveIn, setFormattedDateMoveIn] = useState("");
@@ -18,46 +19,83 @@ const OrderForm = () => {
   });
 
   useEffect(() => {
-    const fetchRooms = async () => {
-      const response = await fetch("/api/admin/rooms");
-      if (!response.ok) {
-        console.log("Failed to fetch the room.");
-      } else {
-        const getRooms = await response.json();
-        setRooms(getRooms);
-      }
-    };
     fetchRooms();
-
-    const fetchOrder = async (id) => {
-      const response = await fetch(`/api/admin/orders/${id}`);
-      if (!response.ok) {
-        console.log("Failed to fetch the order.");
-      } else {
-        const data = await response.json();
-        setUpdatedOrder(data);
-        const moveIn = getDates(data.dateMoveIn);
-        setFormattedDateMoveIn(moveIn);
-        const moveOut = getDates(data.dateMoveOut);
-        setFormattedDateMoveOut(moveOut);
-        setRoomSelected(data.roomId);
-      }
-    };
-
-    fetchOrder("65f55b69489c98a37c525e3c");
+    fetchOrder(id);
   }, []);
+
+  const fetchRooms = async () => {
+    const response = await fetch("/api/admin/rooms");
+    if (!response.ok) {
+      console.log("Failed to fetch the room.");
+    } else {
+      const getRooms = await response.json();
+      setRooms(getRooms);
+    }
+  };
+
+  const fetchOrder = async (id) => {
+    const response = await fetch(`/api/admin/orders/${id}`);
+    if (!response.ok) {
+      console.log("Failed to fetch the order.");
+    } else {
+      const data = await response.json();
+      setUpdatedOrder(data);
+      setRoomSelected(data.roomId);
+    }
+  };
 
   const getDates = (translateDate) => {
     const getThisDate = new Date(translateDate);
-
-    const year = getThisDate.getFullYear();
-    const month = (getThisDate.getMonth() + 1).toString().padStart(2, "0");
-    const day = getThisDate.getDate().toString().padStart(2, "0");
+    const year = getThisDate.getUTCFullYear();
+    const month = (getThisDate.getUTCMonth() + 1).toString().padStart(2, "0");
+    const day = getThisDate.getUTCDate().toString().padStart(2, "0");
     const getFormattedDate = `${year}-${month}-${day}`;
     return getFormattedDate;
   };
 
-  const calcTotalToPay = updatedOrder.roomId.price * updatedOrder.numOfNights;
+  useEffect(() => {
+    handleTotalPriceUpdateDates();
+  }, [updatedOrder.dateMoveIn, updatedOrder.dateMoveOut]);
+
+  const handleTotalPriceUpdateDates = async () => {
+    const difference =
+      new Date(updatedOrder.dateMoveOut) - new Date(updatedOrder.dateMoveIn);
+    const calcTotalToPay = Math.round(
+      updatedOrder.roomId.price * Math.round(difference / (1000 * 60 * 60 * 24))
+    );
+    setUpdatedOrder({
+      ...updatedOrder,
+      totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
+    });
+    console.log(
+      updatedOrder.roomId.price,
+      Math.round(difference / (1000 * 60 * 60 * 24))
+    );
+  };
+
+  useEffect(() => {
+    if (updatedOrder.roomId) {
+      handleTotalPriceUpdateRoom();
+    }
+  }, [updatedOrder.roomId]);
+
+  const handleTotalPriceUpdateRoom = async () => {
+    const response = await fetch(`/api/admin/rooms/${updatedOrder.roomId}`);
+    if (response.ok) {
+      const data = await response.json();
+      const difference =
+        new Date(updatedOrder.dateMoveOut) - new Date(updatedOrder.dateMoveIn);
+      let calcTotalToPay = 0;
+      calcTotalToPay = Math.round(
+        data.price * Math.round(difference / (1000 * 60 * 60 * 24))
+      );
+      setUpdatedOrder({
+        ...updatedOrder,
+        totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
+      });
+      console.log(data.price, Math.round(difference / (1000 * 60 * 60 * 24)));
+    }
+  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -68,6 +106,7 @@ const OrderForm = () => {
         "Content-Type": "application/json",
       },
     });
+    navigate("/admin/guests-orders");
   };
 
   return (
@@ -105,36 +144,36 @@ const OrderForm = () => {
         <input
           className="my-1 p-2 border-dark border-2"
           type="date"
-          value={formattedDateMoveIn}
-          onChange={(event) =>
+          value={getDates(updatedOrder.dateMoveIn)}
+          onChange={(event) => {
             setUpdatedOrder({
               ...updatedOrder,
               dateMoveIn: event.target.value,
-            })
-          }
+            });
+          }}
         />
         <label className="my-1 py-2">Move-out date</label>
         <input
           className="my-1 p-2 border-dark border-2"
           type="date"
-          value={formattedDateMoveOut}
-          onChange={(event) =>
+          value={getDates(updatedOrder.dateMoveOut)}
+          onChange={(event) => {
             setUpdatedOrder({
               ...updatedOrder,
               dateMoveOut: event.target.value,
-            })
-          }
+            });
+          }}
         />
         <label className="my-1 py-2">Room</label>
         <select
           value={updatedOrder.roomId._id}
           className="my-1 p-2 border-dark border-2"
-          onChange={(event) =>
+          onChange={(event) => {
             setUpdatedOrder({
               ...updatedOrder,
               roomId: event.target.value,
-            })
-          }
+            });
+          }}
         >
           <option>Select room</option>
           {rooms &&
@@ -162,10 +201,3 @@ const OrderForm = () => {
 };
 
 export default OrderForm;
-
-/**
- * add the logic to calculate the total amount to pay on the update;
- * fix the dates --- enabling editing;
- * add handleSubmit form;
- *
- */

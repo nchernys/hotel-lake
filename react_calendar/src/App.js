@@ -35,8 +35,8 @@ function App() {
         <Route path="/admin/update-room/:id?" element={<UpdateRoom />} />
         <Route path="/admin/guests-orders" element={<GuestsOrders />} />
         <Route
-          path="/admin/guests-orders/update"
-          element={<OrderForm id={"65f55b69489c98a37c525e3c"} />}
+          path="/admin/guests-orders/update/:id?"
+          element={<OrderForm />}
         />
       </Routes>
     </BrowserRouter>

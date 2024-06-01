@@ -7,12 +7,15 @@ const roomsRoutes = require("./routes/roomsRoutes");
 const roomCategoriesRoutes = require("./routes/roomCategoriesRoutes");
 const featuresRoutes = require("./routes/featuresRoutes");
 const ordersRoutes = require("./routes/ordersRoutes");
+const paymentGateway = require("./routes/paymentGateway");
 
 const app = express();
 
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "../react_calendar/build")));
+{
+  app.use(express.static(path.join(__dirname, "../react_calendar/build")));
+}
 
 app.use((req, res, next) => {
   console.log(req.path, req.method);
@@ -23,6 +26,7 @@ app.use("/api/admin/rooms", roomsRoutes);
 app.use("/api/admin/categories", roomCategoriesRoutes);
 app.use("/api/admin/features", featuresRoutes);
 app.use("/api/admin/orders", ordersRoutes);
+app.use("/api/payment", paymentGateway);
 
 mongoose
   .connect(process.env.MONGO_URI)

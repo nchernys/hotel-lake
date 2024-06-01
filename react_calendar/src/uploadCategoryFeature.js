@@ -149,51 +149,6 @@ const UploadCategory = () => {
             </ol>
           </div>
         </div>
-        <div className="w-1/2 px-10">
-          {/* FEATURES */}
-          <div className="text-2xl font-bold my-5">Add a room feature</div>
-          <form
-            className="flex flex-col items-start w-full my-5 py-5 box-border"
-            onSubmit={(event) => handleSubmitFeature(event)}
-          >
-            <input
-              className="mb-10 border-2 p-3 w-full"
-              type="text"
-              placeholder="Feature name"
-              onChange={(e) => setNameFeature(e.target.value)}
-              value={nameFeature}
-            />
-            <button className="bg-slate-300 font-bold py-2 w-60" type="submit">
-              Submit
-            </button>
-          </form>
-
-          <div className="my-16 w-full">
-            <div className="text-2xl font-bold my-5">All Features</div>
-            <ol>
-              {features && features.length > 0 ? (
-                features.map((feature) => (
-                  <li
-                    key={feature._id}
-                    className="text-lg my-2 flex justify-between"
-                  >
-                    <span>{feature.name}</span>
-                    <span
-                      className="text-red-400 cursor-pointer"
-                      onClick={() => {
-                        handleDeleteFeature(feature._id);
-                      }}
-                    >
-                      del
-                    </span>
-                  </li>
-                ))
-              ) : (
-                <div className="my-5"> No features found. </div>
-              )}
-            </ol>
-          </div>
-        </div>
       </div>
     </div>
   );

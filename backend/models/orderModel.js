@@ -25,15 +25,8 @@ const orderSchema = new Schema(
     dateMoveOut: {
       type: String,
     },
-    numOfNights: {
-      type: Number,
-    },
     totalToPay: {
       type: Number,
-    },
-    isCompleted: {
-      type: Boolean,
-      default: false,
     },
   },
   { timestamps: true }
