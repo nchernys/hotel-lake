@@ -46,4 +46,4 @@ jobs:
             cd backend
               npm install
               pm2 restart hotel
-              sudo systemctl restart nginx
+            sudo systemctl restart nginx
