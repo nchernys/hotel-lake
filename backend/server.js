@@ -29,7 +29,7 @@ app.use("/api/admin/orders", ordersRoutes);
 app.use("/api/payment", paymentGateway);
 
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI_HOTEL)
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log("Listening on port 4000 and connected to the DB.");
