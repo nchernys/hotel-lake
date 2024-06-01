@@ -18,9 +18,8 @@ const paymentPost = async (req, res) => {
       unit_amount: order.roomId.price * 100,
     },
     quantity: Math.floor(
-      (new Date(order.dateMoveOut).getDate() -
-        new Date(order.dateMoveIn).getDate()) /
-        (1000 * 60 * 60 * 24)
+      new Date(order.dateMoveOut).getDate() -
+        new Date(order.dateMoveIn).getDate()
     ),
   }));
 
