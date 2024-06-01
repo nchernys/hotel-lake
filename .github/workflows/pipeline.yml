@@ -45,4 +45,4 @@ jobs:
             cd ..
             cd backend
               npm install
-              pm2 restart hotel-lake
+              pm2 restart server
