@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Calendar from "react-calendar";
 import "./index.css";
+import { DateTime } from "luxon";
 
 const WebCalendar = () => {
   const { roomId, categoryId } = useParams();
@@ -79,9 +80,11 @@ const WebCalendar = () => {
   }, [showRoomId]);
 
   const nightsOfStay = Math.round(
-    (moveoutDate - moveinDate) / (1000 * 60 * 60 * 24) - 1
+    new Date(moveoutDate).getDate() - new Date(moveinDate).getDate()
   );
   const totalToPay = showRoom.price * nightsOfStay;
+
+  console.log("NIGHT OF STAY", nightsOfStay, moveoutDate);
 
   const handleSubmitReservation = async (e) => {
     e.preventDefault();
@@ -105,6 +108,13 @@ const WebCalendar = () => {
       );
     }
 
+    const saveToDBISOMoveInDate = DateTime.fromJSDate(
+      new Date(moveinDate)
+    ).toISO();
+    const saveToDBISOMoveOutDate = DateTime.fromJSDate(
+      new Date(moveoutDate)
+    ).toISO();
+
     if (firstName && lastName && moveinDate && moveoutDate) {
       const newOrder = {
         guestFirstName: firstName,
@@ -112,8 +122,8 @@ const WebCalendar = () => {
         totalToPay: totalToPay,
         categoryId: showRoom.category,
         roomId: showRoom._id,
-        dateMoveIn: moveinDate,
-        dateMoveOut: moveoutDate,
+        dateMoveIn: saveToDBISOMoveInDate,
+        dateMoveOut: saveToDBISOMoveOutDate,
       };
 
       setNewOrderCreated(newOrder);
@@ -425,14 +435,14 @@ const WebCalendar = () => {
                 {isMoveinSubmitted &&
                   unavailableDatesRange.length === 0 &&
                   moveinDate &&
-                  moveinDate.toLocaleDateString("en-GB")}
+                  moveinDate.toDateString()}
               </p>
               <p className="invoice-cart my-1">
                 <strong>Move-out date:</strong>{" "}
                 {isMoveoutSubmitted &&
                   unavailableDatesRange.length === 0 &&
                   moveoutDate &&
-                  moveoutDate.toLocaleDateString("en-GB")}
+                  moveoutDate.toDateString()}
               </p>
               <p className="invoice-cart my-1">
                 <strong>Nights:</strong>{" "}

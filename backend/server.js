@@ -29,10 +29,12 @@ app.use("/api/admin/orders", ordersRoutes);
 app.use("/api/payment", paymentGateway);
 
 mongoose
-  .connect(process.env.MONGO_URI_HOTEL)
+  .connect(
+    "mongodb+srv://nchernys:Natageos=77@hoteldb.umte6qd.mongodb.net/?retryWrites=true&w=majority&appName=hotelDB"
+  )
   .then(() => {
-    app.listen(process.env.PORT, () => {
-      console.log("Listening on port 4000 and connected to the DB.");
+    app.listen(process.env.PORT || 4002, () => {
+      console.log("Listening on port 4002 and connected to the DB.");
     });
   })
   .catch((error) => {

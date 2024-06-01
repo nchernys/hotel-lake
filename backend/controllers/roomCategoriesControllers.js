@@ -41,8 +41,7 @@ const deleteThisCategory = async (req, res) => {
     if (roomsByCategory.length > 0) {
       console.log(roomsByCategory.length);
       res.status(200).json({
-        message:
-          "You cannot delete this category. The category has associated rooms.",
+        message: "no-delete",
       });
     } else {
       console.log("No rooms found in this category.");

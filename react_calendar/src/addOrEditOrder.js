@@ -14,8 +14,8 @@ const OrderForm = () => {
     totalToPay: "",
     categoryId: "",
     roomId: "",
-    dateMoveIn: "",
-    dateMoveOut: "",
+    dateMoveIn: new Date(),
+    dateMoveOut: new Date(),
   });
 
   useEffect(() => {
@@ -46,9 +46,9 @@ const OrderForm = () => {
 
   const getDates = (translateDate) => {
     const getThisDate = new Date(translateDate);
-    const year = getThisDate.getUTCFullYear();
-    const month = (getThisDate.getUTCMonth() + 1).toString().padStart(2, "0");
-    const day = getThisDate.getUTCDate().toString().padStart(2, "0");
+    const year = getThisDate.getFullYear();
+    const month = (getThisDate.getMonth() + 1).toString().padStart(2, "0");
+    const day = getThisDate.getDate().toString().padStart(2, "0");
     const getFormattedDate = `${year}-${month}-${day}`;
     return getFormattedDate;
   };
@@ -67,10 +67,6 @@ const OrderForm = () => {
       ...updatedOrder,
       totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
     });
-    console.log(
-      updatedOrder.roomId.price,
-      Math.round(difference / (1000 * 60 * 60 * 24))
-    );
   };
 
   useEffect(() => {
@@ -93,7 +89,6 @@ const OrderForm = () => {
         ...updatedOrder,
         totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
       });
-      console.log(data.price, Math.round(difference / (1000 * 60 * 60 * 24)));
     }
   };
 

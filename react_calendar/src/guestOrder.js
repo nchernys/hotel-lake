@@ -5,6 +5,7 @@ const { format } = require("date-fns");
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [offerHoursLeft, setOfferHoursLeft] = useState("");
+  const [nights, setNights] = useState();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -24,12 +25,21 @@ const Orders = () => {
           ordersWithDateObjects[ordersWithDateObjects.length - 1];
 
         setOrders([lastOrder]);
+
         const createdAt = new Date(lastOrder.createdAt);
         let offerExpired = new Date(createdAt);
         offerExpired = offerExpired.setHours(createdAt.getHours() + 72);
         const today = new Date();
         let hoursLeft = (offerExpired - today) / (1000 * 60 * 60);
         setOfferHoursLeft(Math.round(hoursLeft));
+
+        setNights(
+          Math.floor(
+            new Date(lastOrder.dateMoveOut).getDate() -
+              new Date(lastOrder.dateMoveIn).getDate()
+          )
+        );
+        console.log(lastOrder.dateMoveOut);
       }
     };
 
@@ -107,6 +117,10 @@ const Orders = () => {
                     <tr>
                       <td className="w-1/3 font-bold">Price (night):</td>
                       <td>${order.roomId.price.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                      <td>Nights:</td>
+                      <td>{nights}</td>
                     </tr>
                     <tr>
                       <td className="w-1/3 font-bold">Total cost:</td>

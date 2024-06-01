@@ -6,6 +6,7 @@ const UploadCategory = () => {
   const [cats, setCats] = useState("");
   const [nameFeature, setNameFeature] = useState("");
   const [features, setFeatures] = useState("");
+  const [noDelete, setNoDelete] = useState(false);
 
   const allCats = async () => {
     const response = await fetch("/api/admin/categories");
@@ -59,6 +60,12 @@ const UploadCategory = () => {
       console.log("Failed to delete the category.");
     } else {
       const data = await response.json();
+      if (data.message === "no-delete") {
+        setNoDelete(true);
+        setTimeout(() => {
+          setNoDelete(false);
+        }, 5000);
+      }
       const updateCats = cats.filter((cat) => cat._id !== id);
       setCats(updateCats);
       allCats();
@@ -125,6 +132,17 @@ const UploadCategory = () => {
 
           <div className="my-16 w-full">
             <div className="text-2xl font-bold my-5">All Categories</div>
+            <div
+              className={`transition-opacity duration-500 ${
+                noDelete ? "opacity-100" : "opacity-0"
+              }`}
+            >
+              {noDelete && (
+                <div className="text-red-500">
+                  Category contains associated rooms.
+                </div>
+              )}
+            </div>
             <ol>
               {cats && cats.length > 0 ? (
                 cats.map((cat) => (

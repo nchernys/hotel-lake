@@ -17,7 +17,11 @@ const paymentPost = async (req, res) => {
       },
       unit_amount: order.roomId.price * 100,
     },
-    quantity: order.numOfNights,
+    quantity: Math.floor(
+      (new Date(order.dateMoveOut).getTime() -
+        new Date(order.dateMoveIn).getTime()) /
+        (1000 * 60 * 60 * 24)
+    ),
   }));
 
   const session = await stripe.checkout.sessions.create({
@@ -25,7 +29,7 @@ const paymentPost = async (req, res) => {
     line_items: lineItems,
     mode: "payment",
     success_url: "http://localhost:3000",
-    cancel_url: "http://localhost:3000/s",
+    cancel_url: "http://localhost:3000/",
   });
 
   res.json({ id: session.id });
