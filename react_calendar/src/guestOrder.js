@@ -114,20 +114,15 @@ const Orders = () => {
                     </tr>
 
                     <tr>
-                      <td className="w-1/3 font-bold">Booked on:</td>
-                      <td>
-                        {format(
-                          new Date(order.createdAt),
-                          "MMMM dd, yyyy HH:mm:ss"
-                        )}
-                      </td>
-                    </tr>
-
-                    <tr>
                       <td colSpan="2" className="pt-5 italic">
-                        {offerHoursLeft >= 0
-                          ? `Your offer will expire in ${offerHoursLeft} hours.`
-                          : "Your offer has expired."}
+                        {offerHoursLeft >= 0 ? (
+                          `Your offer will expire in ${offerHoursLeft} hours.`
+                        ) : (
+                          <>
+                            <div>Your booking has expired.</div>
+                            <div>Would you like to make a new reservation?</div>
+                          </>
+                        )}
                       </td>
                     </tr>
                   </tbody>
