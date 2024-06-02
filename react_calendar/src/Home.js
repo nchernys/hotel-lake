@@ -1,6 +1,17 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
       <div className="home-image flex items-center">
@@ -21,7 +32,11 @@ const Home = () => {
           </div>
         </div>
         <div className="home-overlay hidden md:flex">
-          <div className="home-overlay-inner ">
+          <div
+            className={`home-overlay-inner ${
+              isVisible ? "visible-blob" : "hidden-blob"
+            }`}
+          >
             <div className="home-text">
               <div className="home-text-subheading">
                 <div>

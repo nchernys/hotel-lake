@@ -64,10 +64,19 @@ body {
   color: rgba(255, 255, 255, 0.15);
 }
 
+.visible-blob {
+  opacity: 1;
+}
+
+.hidden-blob {
+  opacity: 0;
+}
+
+
 .home-image {
   background: url("../public/images/hotel/hotel-home-5.webp") no-repeat;
   background-size: cover;
-  background-position: center calc(100% + 100px);
+  background-position: center;
   width: 100vw;
   height: calc(100vh - 40px);
   position: relative;
@@ -95,6 +104,7 @@ body {
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+  transition: 2300ms;
   animation: shape 12s infinite ease-in-out;
 }
 
