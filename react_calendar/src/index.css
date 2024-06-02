@@ -65,11 +65,11 @@ body {
 }
 
 .home-image {
-  background: url("../public/images/hotel/hotel-home-5-1-ex-3.jpg") no-repeat;
+  background: url("../public/images/hotel/hotel-home-5.webp") no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: center calc(100% + 100px);
   width: 100vw;
-  height: calc(100vh - 65px);
+  height: calc(100vh - 40px);
   position: relative;
 }
 
