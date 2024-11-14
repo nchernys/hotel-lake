@@ -4,10 +4,12 @@ const { format } = require("date-fns");
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const [offerHoursLeft, setOfferHoursLeft] = useState("");
+  const [offerHoursLeft, setOfferHoursLeft] = useState([]);
   const [nights, setNights] = useState();
 
   useEffect(() => {
+    {
+      /*
     const fetchOrders = async () => {
       const response = await fetch("/api/admin/orders");
       if (!response.ok) {
@@ -44,15 +46,42 @@ const Orders = () => {
     };
 
     fetchOrders();
+
+      */
+    }
+    const today = new Date();
+    const fetchOrders = JSON.parse(localStorage.getItem("hotel_orders")) || [];
+    setOrders(fetchOrders);
+
+    const updatedOfferHoursLeft = fetchOrders.map((order) => {
+      let offerExpired = new Date(order.createdAt);
+      offerExpired.setHours(offerExpired.getHours() + 72);
+
+      let hoursLeft = (offerExpired - today) / (1000 * 60 * 60);
+      return Math.round(hoursLeft);
+    });
+
+    const updatedNights = fetchOrders.map((order) => {
+      const nights = Math.floor(
+        new Date(order.dateMoveOut).getDate() -
+          new Date(order.dateMoveIn).getDate()
+      );
+      return nights;
+    });
+
+    setNights(updatedNights);
+    setOfferHoursLeft(updatedOfferHoursLeft);
   }, []);
 
-  const makePayment = async () => {
+  const makePayment = async (roomId) => {
+    const getOrdersToPay = orders.find((order) => order._id === roomId);
+
     const stripe = await loadStripe(
       "pk_test_51PCuAZ09yFMm4KWFLPN8qPcbYDQwfYQvUuLZ12qtQStdNMJoLrd4GaIQ6CjW7QnaFIbEDPXUgtsYIeIOYkClLQk500nYejFsni"
     );
 
     const body = {
-      orders: orders,
+      orders: [getOrdersToPay],
     };
 
     const headers = {
@@ -75,6 +104,20 @@ const Orders = () => {
     }
   };
 
+  const handleDeleteRoomReservation = (roomIndex) => {
+    let ordersFromLocalStorage = JSON.parse(
+      localStorage.getItem("hotel_orders")
+    );
+    if (roomIndex >= 0 && roomIndex < ordersFromLocalStorage.length) {
+      ordersFromLocalStorage.splice(roomIndex, 1);
+    }
+
+    localStorage.setItem(
+      "hotel_orders",
+      JSON.stringify(ordersFromLocalStorage)
+    );
+  };
+
   return (
     <>
       <div className="w-11/12 sm:w-3/4 mx-auto my-1 p-5 box-border relative flex flex-col sm:flex-row">
@@ -85,7 +128,7 @@ const Orders = () => {
           {!orders ? (
             <div className="my-10">You have not made any reservations yet.</div>
           ) : (
-            orders.map((order) => (
+            orders.map((order, i) => (
               <>
                 <table key={order._id} className="w-full my-10">
                   <thead></thead>
@@ -99,25 +142,23 @@ const Orders = () => {
                       <td>{order.guestLastName}</td>
                     </tr>
                     <tr>
-                      <td className="w-1/3 font-bold">Room category:</td>
-                      <td>{order.categoryId.name}</td>
-                    </tr>
-                    <tr>
                       <td className="w-1/3 font-bold">Room name:</td>
-                      <td>{order.roomId.name}</td>
+                      <td>{order.roomName}</td>
                     </tr>
                     <tr>
                       <td className="w-1/3 font-bold">Move-in date:</td>
-                      <td>{order.dateMoveIn}</td>
+                      <td>{new Date(order.dateMoveIn).toDateString()}</td>
                     </tr>
                     <tr>
                       <td className="w-1/3 font-bold">Move-out date:</td>
-                      <td>{order.dateMoveOut}</td>
+                      <td>{new Date(order.dateMoveOut).toDateString()}</td>
                     </tr>
+
                     <tr>
                       <td className="w-1/3 font-bold">Price (night):</td>
-                      <td>${order.roomId.price.toFixed(2)}</td>
+                      <td>${order.roomPrice.toFixed(2)}</td>
                     </tr>
+
                     <tr>
                       <td className="w-1/3 font-bold">Nights:</td>
                       <td>{nights}</td>
@@ -129,8 +170,8 @@ const Orders = () => {
 
                     <tr>
                       <td colSpan="2" className="pt-5 italic">
-                        {offerHoursLeft >= 0 ? (
-                          `Your offer will expire in ${offerHoursLeft} hours.`
+                        {offerHoursLeft[i] >= 0 ? (
+                          `Your offer will expire in ${offerHoursLeft[i]} hour(s).`
                         ) : (
                           <>
                             <div>Your booking has expired.</div>
@@ -142,15 +183,23 @@ const Orders = () => {
                   </tbody>
                 </table>
 
-                <button
-                  disabled={offerHoursLeft < 0 ? true : false}
-                  className={`py-2 w-32 px-3 text-white my-8 text-center rounded ${
-                    offerHoursLeft < 0 ? "bg-gray-400" : "bg-red-500"
-                  }`}
-                  onClick={makePayment}
-                >
-                  Payment
-                </button>
+                <div>
+                  <button
+                    disabled={offerHoursLeft[i] < 0 ? true : false}
+                    className={`py-2 w-32 px-3 text-white my-8 text-center rounded me-1 mb-1 ${
+                      offerHoursLeft[i] < 0 ? "bg-gray-400" : "bg-red-500"
+                    }`}
+                    onClick={() => makePayment(order._id)}
+                  >
+                    Payment
+                  </button>
+                  <button
+                    className={`py-2 w-32 px-3 text-white ms-8  text-center rounded bg-gray-400   `}
+                    onClick={() => handleDeleteRoomReservation(i)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </>
             ))
           )}

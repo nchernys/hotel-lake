@@ -107,9 +107,11 @@ const GuestsOrders = () => {
                     <td className="pb-3 text-xl font-bold text-red-600">
                       Order {index + 1}
                     </td>
+                    {/*
                     <td className="text-end text-slate-400">
                       <PDFGenerator data={order} />
                     </td>
+                    */}
                   </tr>
                 </thead>
                 <tbody>
@@ -120,10 +122,6 @@ const GuestsOrders = () => {
                   <tr>
                     <td className="w-1/3 font-bold">Last name:</td>
                     <td>{order.guestLastName}</td>
-                  </tr>
-                  <tr>
-                    <td className="w-1/3 font-bold">Room category:</td>
-                    <td>{order.categoryId.name}</td>
                   </tr>
                   <tr>
                     <td className="w-1/3 font-bold">Room name:</td>

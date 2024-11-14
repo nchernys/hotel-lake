@@ -4,31 +4,44 @@ const stripe = require("stripe")(
 
 const paymentPost = async (req, res) => {
   const { orders } = req.body;
-  const lineItems = orders.map((order) => ({
-    price_data: {
-      currency: "usd",
-      product_data: {
-        name: order.roomId.name,
-        description:
-          "Guest Name: " +
-          order.guestFirstName.toUpperCase() +
-          " " +
-          order.guestLastName.toUpperCase(),
+  console.log(orders);
+  const lineItems = orders.map((order) => {
+    return {
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: `Room Name: ${order.roomName}`,
+          description:
+            "Guest Name: " +
+            order.guestFirstName.toUpperCase() +
+            " " +
+            order.guestLastName.toUpperCase(),
+        },
+        unit_amount: order.roomPrice * 100,
       },
-      unit_amount: order.roomId.price * 100,
-    },
-    quantity: Math.floor(
-      new Date(order.dateMoveOut).getDate() -
-        new Date(order.dateMoveIn).getDate()
-    ),
-  }));
+      quantity: Math.max(
+        new Date(order.dateMoveOut).getDate() -
+          new Date(order.dateMoveIn).getDate(),
+        1
+      ),
+    };
+  });
+
+  const metadata = {
+    guestFirstNames: orders.map((order) => order.guestFirstName).join(", "),
+    guestLastNames: orders.map((order) => order.guestLastName).join(", "),
+    roomIds: orders.map((order) => order.roomId).join(", "),
+    dateMoveIns: orders.map((order) => order.dateMoveIn).join(", "),
+    dateMoveOuts: orders.map((order) => order.dateMoveOut).join(", "),
+  };
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url: "http://localhost:3000",
-    cancel_url: "http://localhost:3000/",
+    success_url: "https://hotel-project.nchernysheva.com/order/payment/success",
+    cancel_url: "https://hotel-project.nchernysheva.com/orders",
+    metadata: metadata,
   });
 
   res.json({ id: session.id });

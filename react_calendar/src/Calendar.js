@@ -122,12 +122,25 @@ const WebCalendar = () => {
         totalToPay: totalToPay,
         categoryId: showRoom.category,
         roomId: showRoom._id,
+        roomPrice: showRoom.price,
+        roomName: showRoom.name,
         dateMoveIn: saveToDBISOMoveInDate,
         dateMoveOut: saveToDBISOMoveOutDate,
+        createdAt: new Date(),
       };
 
       setNewOrderCreated(newOrder);
 
+      let getOrdersfromLocalStorage =
+        JSON.parse(localStorage.getItem("hotel_orders")) || [];
+      getOrdersfromLocalStorage.push(newOrder);
+
+      localStorage.setItem(
+        "hotel_orders",
+        JSON.stringify(getOrdersfromLocalStorage)
+      );
+      {
+        /*
       const createOrder = await fetch("/api/admin/orders", {
         method: "POST",
         body: JSON.stringify(newOrder),
@@ -138,6 +151,8 @@ const WebCalendar = () => {
         console.log("Failed to create an order.");
       } else {
         const data = await createOrder.json();
+      }
+    */
       }
 
       setReservationSubmitted(true);

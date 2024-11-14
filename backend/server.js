@@ -8,19 +8,30 @@ const roomCategoriesRoutes = require("./routes/roomCategoriesRoutes");
 const featuresRoutes = require("./routes/featuresRoutes");
 const ordersRoutes = require("./routes/ordersRoutes");
 const paymentGateway = require("./routes/paymentGateway");
+const stripeWebhook = require("./routes/stripeWebhooks");
 
 const app = express();
-
-app.use(express.json());
-
-{
-  app.use(express.static(path.join(__dirname, "../react_calendar/build")));
-}
 
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
+
+app.use((req, res, next) => {
+  if (req.originalUrl.startsWith("/stripe-webhook")) {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
+
+app.use(
+  "/stripe-webhook",
+  express.raw({ type: "application/json" }),
+  stripeWebhook
+);
+
+app.use(express.json());
 
 app.use("/api/admin/rooms", roomsRoutes);
 app.use("/api/admin/categories", roomCategoriesRoutes);

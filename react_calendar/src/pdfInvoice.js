@@ -133,10 +133,6 @@ const PDFGenerator = ({ data }) => {
           <Text> {data.guestLastName}</Text>
         </View>
         <View style={styles.margin}>
-          <Text style={styles.title}>Room Category:</Text>
-          <Text> {data.categoryId.name}</Text>
-        </View>
-        <View style={styles.margin}>
           <Text style={styles.title}>Room No.:</Text>
           <Text> {data.roomId.name}</Text>
         </View>

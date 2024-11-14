@@ -14,6 +14,7 @@ import AllRooms from "./allRooms";
 import GuestsOrders from "./guestsOrders";
 import ChooseRoom from "./chooseRoom";
 import OrderForm from "./addOrEditOrder";
+import PaymentSuccess from "./orderPaymentSuccess";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/about" element={<About />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/order/payment/success" element={<PaymentSuccess />} />
         <Route
           path="/admin/categories-features"
           element={<UploadCategoryFeature />}
