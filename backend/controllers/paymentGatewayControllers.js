@@ -15,14 +15,21 @@ const paymentPost = async (req, res) => {
             "Guest Name: " +
             order.guestFirstName.toUpperCase() +
             " " +
-            order.guestLastName.toUpperCase(),
+            order.guestLastName.toUpperCase() +
+            ", Check-in: " +
+            new Date(order.dateMoveIn).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            }) +
+            ", Check-out: " +
+            new Date(order.dateMoveOut).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            }),
         },
-        unit_amount: order.roomPrice * 100,
       },
-      quantity: Math.floor(
-        new Date(order.dateMoveOut).getDate() -
-          new Date(order.dateMoveIn).getDate()
-      ),
     };
   });
 
