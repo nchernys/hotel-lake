@@ -17,17 +17,9 @@ const paymentPost = async (req, res) => {
             " " +
             order.guestLastName.toUpperCase() +
             ", Check-in: " +
-            new Date(order.dateMoveIn).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            }) +
+            new Date(order.dateMoveIn).toDateString() +
             ", Check-out: " +
-            new Date(order.dateMoveOut).toLocaleDateString("en-US", {
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            }),
+            new Date(order.dateMoveOut).toDateString(),
         },
         // Add unit_amount in cents (assuming order.price is in dollars)
         unit_amount: order.roomPrice * 100, // Make sure order.price is a valid number
