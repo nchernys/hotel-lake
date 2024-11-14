@@ -2,10 +2,7 @@ const Order = require("../models/orderModel");
 
 const getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find({})
-      .populate("categoryId")
-      .populate("roomId")
-      .exec();
+    const orders = await Order.find({}).populate("roomId").exec();
 
     res.status(200).json(orders);
   } catch (error) {
@@ -18,11 +15,9 @@ const addNewOrder = async (req, res) => {
     guestFirstName,
     guestLastName,
     totalToPay,
-    categoryId,
     roomId,
     dateMoveIn,
     dateMoveOut,
-    numOfNights,
   } = req.body;
 
   try {
@@ -30,7 +25,6 @@ const addNewOrder = async (req, res) => {
       guestFirstName,
       guestLastName,
       totalToPay,
-      categoryId,
       roomId,
       dateMoveIn,
       dateMoveOut,
