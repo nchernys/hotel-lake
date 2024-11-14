@@ -38,11 +38,12 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             cd /home/natasha/hotel-lake
-            git pull --rebase origin master
+            git pull 
             cd react_calendar
               npm install
               npm run build 
             cd ..
             cd backend
               npm install
+              sudo systemctl restart nginx
               pm2 restart hotel
