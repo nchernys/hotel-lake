@@ -16,9 +16,11 @@ const paymentPost = async (req, res) => {
             order.guestFirstName.toUpperCase() +
             " " +
             order.guestLastName.toUpperCase() +
-            ", Check-in: " +
+            " -- " +
+            "Check-in: " +
             new Date(order.dateMoveIn).toDateString() +
-            ", Check-out: " +
+            " -- " +
+            "Check-out: " +
             new Date(order.dateMoveOut).toDateString(),
         },
         // Add unit_amount in cents (assuming order.price is in dollars)
