@@ -29,11 +29,14 @@ const paymentPost = async (req, res) => {
               year: "numeric",
             }),
         },
-        quantity: Math.floor(
-          new Date(order.dateMoveOut).getDate() -
-            new Date(order.dateMoveIn).getDate()
-        ),
+        // Add unit_amount in cents (assuming order.price is in dollars)
+        unit_amount: order.roomPrice * 100, // Make sure order.price is a valid number
       },
+      // Correct calculation of nights between dateMoveIn and dateMoveOut
+      quantity: Math.floor(
+        (new Date(order.dateMoveOut) - new Date(order.dateMoveIn)) /
+          (1000 * 60 * 60 * 24)
+      ),
     };
   });
 
