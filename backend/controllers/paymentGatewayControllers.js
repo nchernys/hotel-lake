@@ -29,6 +29,10 @@ const paymentPost = async (req, res) => {
               year: "numeric",
             }),
         },
+        quantity: Math.floor(
+          new Date(order.dateMoveOut).getDate() -
+            new Date(order.dateMoveIn).getDate()
+        ),
       },
     };
   });
