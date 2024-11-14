@@ -19,10 +19,9 @@ const paymentPost = async (req, res) => {
         },
         unit_amount: order.roomPrice * 100,
       },
-      quantity: Math.round(
-        (new Date(order.dateMoveOut).setHours(0, 0, 0, 0) -
-          new Date(order.dateMoveIn).setHours(0, 0, 0, 0)) /
-          (1000 * 60 * 60 * 24)
+      quantity: Math.floor(
+        new Date(order.dateMoveOut).getDate() -
+          new Date(order.dateMoveIn).getDate()
       ),
     };
   });

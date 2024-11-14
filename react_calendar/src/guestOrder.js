@@ -5,7 +5,7 @@ const { format } = require("date-fns");
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [offerHoursLeft, setOfferHoursLeft] = useState([]);
-  const [nights, setNights] = useState();
+  const [nights, setNights] = useState([]);
 
   useEffect(() => {
     {
@@ -162,7 +162,7 @@ const Orders = () => {
 
                     <tr>
                       <td className="w-1/3 font-bold">Nights:</td>
-                      <td>{nights}</td>
+                      <td>{nights[i]}</td>
                     </tr>
                     <tr>
                       <td className="w-1/3 font-bold">Total cost:</td>
