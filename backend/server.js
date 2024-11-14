@@ -59,3 +59,8 @@ app.use(express.static(path.join(__dirname, "../react_calendar/build")));
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "../react_calendar/build", "index.html"));
 });
+
+{
+  /*
+  version 1.1*/
+}
