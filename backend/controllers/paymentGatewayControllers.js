@@ -21,7 +21,8 @@ const paymentPost = async (req, res) => {
       },
       quantity:
         (new Date(order.dateMoveOut) - new Date(order.dateMoveIn)) /
-        (1000 * 60 * 60 * 24),
+          (1000 * 60 * 60 * 24) -
+        1,
     };
   });
 
