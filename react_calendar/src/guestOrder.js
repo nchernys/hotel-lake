@@ -116,6 +116,7 @@ const Orders = () => {
       "hotel_orders",
       JSON.stringify(ordersFromLocalStorage)
     );
+    setOrders(ordersFromLocalStorage);
   };
 
   return (
@@ -125,7 +126,7 @@ const Orders = () => {
           <h1 className="text-3xl font-bold flex justify-between items-end">
             <span>Your Reservations</span>
           </h1>
-          {!orders ? (
+          {!orders || orders.length < 1 ? (
             <div className="my-10">You have not made any reservations yet.</div>
           ) : (
             orders.map((order, i) => (
@@ -182,7 +183,6 @@ const Orders = () => {
                     </tr>
                   </tbody>
                 </table>
-
                 <div>
                   <button
                     disabled={offerHoursLeft[i] < 0 ? true : false}
