@@ -63,8 +63,8 @@ const Orders = () => {
 
     const updatedNights = fetchOrders.map((order) => {
       const nights = Math.floor(
-        new Date(order.dateMoveOut).getDate() -
-          new Date(order.dateMoveIn).getDate()
+        (new Date(order.dateMoveOut) - new Date(order.dateMoveIn)) /
+          (1000 * 60 * 60 * 24)
       );
       return nights;
     });

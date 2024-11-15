@@ -79,12 +79,10 @@ const WebCalendar = () => {
     fetchDatesOccupied();
   }, [showRoomId]);
 
-  const nightsOfStay = Math.round(
-    new Date(moveoutDate).getDate() - new Date(moveinDate).getDate()
+  const nightsOfStay = Math.floor(
+    (new Date(moveoutDate) - new Date(moveinDate)) / (1000 * 60 * 60 * 24)
   );
   const totalToPay = showRoom.price * nightsOfStay;
-
-  console.log("NIGHT OF STAY", nightsOfStay, moveoutDate);
 
   const handleSubmitReservation = async (e) => {
     e.preventDefault();
