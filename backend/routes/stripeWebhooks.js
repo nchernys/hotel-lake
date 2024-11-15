@@ -13,7 +13,6 @@ router.post(
   express.raw({ type: "application/json" }),
   async (request, response) => {
     const sig = request.headers["stripe-signature"];
-    console.log("WEBHOOK1");
     console.log("Signature header:", sig);
     console.log("Signature body:", request.body);
 
@@ -27,11 +26,8 @@ router.post(
       return;
     }
 
-    console.log("WEBHOOK2");
-
     if (event.type === "checkout.session.completed") {
       const checkoutSessionCompleted = event.data.object;
-      console.log("WEBHOOK3");
 
       const orderDetails = {
         guestFirstName: checkoutSessionCompleted.metadata.guestFirstNames,
@@ -41,8 +37,6 @@ router.post(
         dateMoveIn: checkoutSessionCompleted.metadata.dateMoveIns,
         dateMoveOut: checkoutSessionCompleted.metadata.dateMoveOuts,
       };
-
-      console.log("WEBHOOK", orderDetails);
 
       request.body = orderDetails;
 

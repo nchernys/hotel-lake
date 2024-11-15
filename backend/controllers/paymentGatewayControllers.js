@@ -1,3 +1,4 @@
+const { format } = require("date-fns");
 const stripe = require("stripe")(
   "sk_test_51PCuAZ09yFMm4KWF8rpAwEOSguaQhPL95nQjmvyFYOYCoyq8lxR8fxmZIJnAGMUu6IjZuyFeCVHpZ1pEUFhebz0N00Jzp4Nejq"
 );
@@ -16,12 +17,12 @@ const paymentPost = async (req, res) => {
             order.guestFirstName.toUpperCase() +
             " " +
             order.guestLastName.toUpperCase() +
-            " -- " +
+            " | " +
             "Check-in: " +
-            new Date(order.dateMoveIn).toDateString() +
-            " -- " +
+            format(new Date(order.dateMoveIn), "MMMM d, yyyy") +
+            " | " +
             "Check-out: " +
-            new Date(order.dateMoveOut).toDateString(),
+            format(new Date(order.dateMoveOut), "MMMM d, yyyy"),
         },
         // Add unit_amount in cents (assuming order.price is in dollars)
         unit_amount: order.roomPrice * 100, // Make sure order.price is a valid number

@@ -73,8 +73,9 @@ const Orders = () => {
     setOfferHoursLeft(updatedOfferHoursLeft);
   }, []);
 
-  const makePayment = async (roomId) => {
-    const getOrdersToPay = orders.find((order) => order._id === roomId);
+  const makePayment = async (index) => {
+    const getOrdersToPay = orders[index];
+    console.log("THIS ORDER", getOrdersToPay);
 
     const stripe = await loadStripe(
       "pk_test_51PCuAZ09yFMm4KWFLPN8qPcbYDQwfYQvUuLZ12qtQStdNMJoLrd4GaIQ6CjW7QnaFIbEDPXUgtsYIeIOYkClLQk500nYejFsni"
@@ -131,7 +132,7 @@ const Orders = () => {
           ) : (
             orders.map((order, i) => (
               <>
-                <table key={order._id} className="w-full my-10">
+                <table key={i} className="w-full my-10">
                   <thead></thead>
                   <tbody>
                     <tr>
@@ -148,11 +149,15 @@ const Orders = () => {
                     </tr>
                     <tr>
                       <td className="w-1/3 font-bold">Move-in date:</td>
-                      <td>{new Date(order.dateMoveIn).toDateString()}</td>
+                      <td>
+                        {format(new Date(order.dateMoveIn), "MMMM d, yyyy")}
+                      </td>
                     </tr>
                     <tr>
                       <td className="w-1/3 font-bold">Move-out date:</td>
-                      <td>{new Date(order.dateMoveOut).toDateString()}</td>
+                      <td>
+                        {format(new Date(order.dateMoveOut), "MMMM d, yyyy")}
+                      </td>
                     </tr>
 
                     <tr>
@@ -189,7 +194,7 @@ const Orders = () => {
                     className={`py-2 w-32 px-3 text-white my-8 text-center rounded me-1 mb-1 ${
                       offerHoursLeft[i] < 0 ? "bg-gray-400" : "bg-red-500"
                     }`}
-                    onClick={() => makePayment(order._id)}
+                    onClick={() => makePayment(i)}
                   >
                     Payment
                   </button>

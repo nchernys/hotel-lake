@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
+const cors = require("cors");
 const multer = require("multer");
 require("dotenv").config();
 const roomsRoutes = require("./routes/roomsRoutes");
@@ -11,6 +12,8 @@ const paymentGateway = require("./routes/paymentGateway");
 const stripeWebhook = require("./routes/stripeWebhooks");
 
 const app = express();
+
+app.use(cors());
 
 app.use((req, res, next) => {
   console.log(req.path, req.method);
@@ -59,8 +62,3 @@ app.use(express.static(path.join(__dirname, "../react_calendar/build")));
 app.get("/*", function (req, res) {
   res.sendFile(path.join(__dirname, "../react_calendar/build", "index.html"));
 });
-
-{
-  /*
-  version 1.1*/
-}
