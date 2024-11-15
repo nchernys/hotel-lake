@@ -55,8 +55,8 @@ const ChooseRoom = () => {
     <>
       <div className="w-auto h-96 overflow-hidden">
         <img
-          src="/images/hotel/hotel-lobby-2-sm.jpg"
-          alt=""
+          src="/images/hotel/hotel-lobby-2-sm.webp"
+          alt="lobby"
           className="w-full h-full object-cover"
           style={{ objectPosition: "50% 65%" }}
         />
