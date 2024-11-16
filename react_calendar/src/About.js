@@ -1,12 +1,5 @@
 import { useEffect } from "react";
 
-const preloadImages = (imageUrls) => {
-  imageUrls.forEach((url) => {
-    const img = new Image();
-    img.src = url;
-  });
-};
-
 const About = () => {
   const hotelImages = [
     "./images/hotel/hotel-0.webp",
@@ -16,6 +9,14 @@ const About = () => {
     "./images/hotel/hotel-3.webp",
     "./images/hotel/hotel-4.webp",
   ];
+
+  const preloadImages = (imageUrls) => {
+    imageUrls.forEach((url) => {
+      const img = new Image();
+      img.src = url;
+    });
+  };
+
   useEffect(() => {
     preloadImages(hotelImages);
   }, []);
