@@ -1,3 +1,12 @@
+import { useEffect } from "react";
+
+const preloadImages = (imageUrls) => {
+  imageUrls.forEach((url) => {
+    const img = new Image();
+    img.src = url;
+  });
+};
+
 const About = () => {
   const hotelImages = [
     "./images/hotel/hotel-0.webp",
@@ -7,6 +16,10 @@ const About = () => {
     "./images/hotel/hotel-3.webp",
     "./images/hotel/hotel-4.webp",
   ];
+  useEffect(() => {
+    preloadImages(hotelImages);
+  }, []);
+
   return (
     <div className="w-full mx-auto flex flex-col justify-center p-5">
       <div className="w-full text-center text-3xl font-bold my-4 lg:mb-8 xl:text-5xl 2xl:text-6xl">
