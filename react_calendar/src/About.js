@@ -1,11 +1,11 @@
 const About = () => {
   const hotelImages = [
-    "./images/hotel/hotel-0.jpg",
-    "./images/hotel/hotel-1.jpg",
-    "./images/hotel/hotel-5.jpg",
-    "./images/hotel/hotel-6.jpg",
-    "./images/hotel/hotel-3.jpg",
-    "./images/hotel/hotel-4.jpg",
+    "./images/hotel/hotel-0.webp",
+    "./images/hotel/hotel-1.webp",
+    "./images/hotel/hotel-5.webp",
+    "./images/hotel/hotel-6.webp",
+    "./images/hotel/hotel-3.webp",
+    "./images/hotel/hotel-4.webp",
   ];
   return (
     <div className="w-full mx-auto flex flex-col justify-center p-5">
