@@ -7,7 +7,6 @@ const ChooseRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedCatId, setSelectedCatId] = useState("");
   const categoryBoxRefs = useRef({});
-  const [imageLoaded, setImageLoaded] = useState(false);
   const baseUrl =
     process.env.REACT_APP_STATUS === "development"
       ? "http://localhost:4002"
@@ -64,11 +63,9 @@ const ChooseRoom = () => {
         <img
           src="/images/hotel/hotel-lobby-2-sm.webp"
           alt=""
-          onLoad={() => setImageLoaded(true)}
           className="w-full h-full object-cover"
           style={{
             objectPosition: "50% 65%",
-            opacity: imageLoaded ? "1" : "0",
           }}
         />
       </div>
