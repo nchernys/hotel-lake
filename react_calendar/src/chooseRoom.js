@@ -12,6 +12,15 @@ const ChooseRoom = () => {
       ? "http://localhost:4002"
       : "..";
 
+  const preloadImage = (src) => {
+    const img = new Image();
+    img.src = src;
+  };
+
+  useEffect(() => {
+    preloadImage("/images/hotel/hotel-lobby-2-sm.webp");
+  }, []);
+
   useEffect(() => {
     const fetchCategories = async () => {
       const response = await fetch(`${baseUrl}/api/admin/categories`);
@@ -62,7 +71,7 @@ const ChooseRoom = () => {
       <div className="w-auto h-96 overflow-hidden">
         <img
           src="/images/hotel/hotel-lobby-2-sm.webp"
-          alt=""
+          alt="1"
           className="w-full h-full object-cover"
           style={{
             objectPosition: "50% 65%",
