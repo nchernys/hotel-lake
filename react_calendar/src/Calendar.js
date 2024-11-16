@@ -27,6 +27,10 @@ const WebCalendar = () => {
   const [dateClicked, setDateClicked] = useState("");
   const [isStartOver, setIsStartOver] = useState(false);
   const [newOrderCreated, setNewOrderCreated] = useState("");
+  const baseUrl =
+    process.env.REACT_APP_STATUS === "development"
+      ? "http://localhost:4002"
+      : "";
 
   function range(start, stop) {
     const getRangeOfDates = [];
@@ -42,7 +46,7 @@ const WebCalendar = () => {
 
   useEffect(() => {
     const fetchRoom = async () => {
-      const response = await fetch(`/api/admin/rooms/${showRoomId}`);
+      const response = await fetch(`${baseUrl}/api/admin/rooms/${showRoomId}`);
 
       if (!response.ok) {
         console.log("Response failed");
@@ -55,7 +59,7 @@ const WebCalendar = () => {
     fetchRoom();
 
     const fetchDatesOccupied = async (id) => {
-      const response = await fetch("/api/admin/orders/");
+      const response = await fetch(`${baseUrl}/api/admin/orders/`);
 
       if (!response.ok) {
         console.log("Failed to fetch the order");
@@ -205,7 +209,7 @@ const WebCalendar = () => {
 
   const handlePrevious = async () => {
     const roomsByCategory = await fetch(
-      `/api/admin/rooms/category/${showRoom.category}`
+      `${baseUrl}/api/admin/rooms/category/${showRoom.category}`
     );
     if (!roomsByCategory.ok) {
       console.log("Failed to fetch rooms.");
@@ -225,7 +229,7 @@ const WebCalendar = () => {
 
   const handleNext = async () => {
     const roomsByCategory = await fetch(
-      `/api/admin/rooms/category/${showRoom.category}`
+      `${baseUrl}/api/admin/rooms/category/${showRoom.category}`
     );
     if (!roomsByCategory.ok) {
       console.log("Failed to fetch rooms.");

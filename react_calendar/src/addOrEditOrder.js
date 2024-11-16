@@ -9,6 +9,7 @@ const OrderForm = () => {
   const [roomSelected, setRoomSelected] = useState("");
   const [formattedDateMoveIn, setFormattedDateMoveIn] = useState("");
   const [formattedDateMoveOut, setFormattedDateMoveOut] = useState("");
+
   const [updatedOrder, setUpdatedOrder] = useState({
     guestFirstName: "",
     guestLastName: "",
@@ -18,6 +19,10 @@ const OrderForm = () => {
     dateMoveIn: new Date(),
     dateMoveOut: new Date(),
   });
+  const baseUrl =
+    process.env.REACT_APP_STATUS === "development"
+      ? "http://localhost:4002"
+      : "";
 
   useEffect(() => {
     fetchRooms();
@@ -25,7 +30,7 @@ const OrderForm = () => {
   }, []);
 
   const fetchRooms = async () => {
-    const response = await fetch("/api/admin/rooms");
+    const response = await fetch(`${baseUrl}/api/admin/rooms`);
     if (!response.ok) {
       console.log("Failed to fetch the room.");
     } else {
@@ -35,7 +40,7 @@ const OrderForm = () => {
   };
 
   const fetchOrder = async (id) => {
-    const response = await fetch(`/api/admin/orders/${id}`);
+    const response = await fetch(`${baseUrl}/api/admin/orders/${id}`);
     if (!response.ok) {
       console.log("Failed to fetch the order.");
     } else {

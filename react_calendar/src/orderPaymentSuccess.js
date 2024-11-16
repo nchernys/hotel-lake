@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 
 const PaymentSuccess = () => {
   const [orders, setOrders] = useState([]);
+  const baseUrl =
+    process.env.REACT_APP_STATUS === "development"
+      ? "http://localhost:4002"
+      : "";
 
   useEffect(() => {
     const getOrders = async () => {
-      const response = await fetch("/api/admin/orders");
+      const response = await fetch(`${baseUrl}/api/admin/orders`);
       if (!response.ok) {
         console.log("Failed to fetch orders.");
       }

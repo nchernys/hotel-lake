@@ -7,10 +7,14 @@ const ChooseRoom = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedCatId, setSelectedCatId] = useState("");
   const categoryBoxRefs = useRef({});
+  const baseUrl =
+    process.env.REACT_APP_STATUS === "development"
+      ? "http://localhost:4002"
+      : "..";
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch("/api/admin/categories");
+      const response = await fetch(`${baseUrl}/api/admin/categories`);
 
       if (!response.ok) {
         console.log("Failed to fetch categories.");
@@ -23,7 +27,7 @@ const ChooseRoom = () => {
     fetchCategories();
 
     const fetchRooms = async () => {
-      const response = await fetch("/api/admin/rooms");
+      const response = await fetch(`${baseUrl}/api/admin/rooms`);
       if (!response.ok) {
         console.log("Failed to fetch the room.");
       } else {
@@ -46,6 +50,8 @@ const ChooseRoom = () => {
     };
   }, []);
 
+  console.log(baseUrl);
+
   const handleVisible = (id) => {
     setSelectedCatId(id);
     setIsVisible(!isVisible);
@@ -56,7 +62,7 @@ const ChooseRoom = () => {
       <div className="w-auto h-96 overflow-hidden">
         <img
           src="/images/hotel/hotel-lobby-2-sm.webp"
-          alt="lobby"
+          alt=""
           className="w-full h-full object-cover"
           style={{ objectPosition: "50% 65%" }}
         />

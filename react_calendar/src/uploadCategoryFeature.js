@@ -7,9 +7,13 @@ const UploadCategory = () => {
   const [nameFeature, setNameFeature] = useState("");
   const [features, setFeatures] = useState("");
   const [noDelete, setNoDelete] = useState(false);
+  const baseUrl =
+    process.env.REACT_APP_STATUS === "development"
+      ? "http://localhost:4002"
+      : "";
 
   const allCats = async () => {
-    const response = await fetch("/api/admin/categories");
+    const response = await fetch(`${baseUrl}/api/admin/categories`);
     if (!response.ok) {
       console.log("Failed to fetch categories.");
     } else {
@@ -19,7 +23,7 @@ const UploadCategory = () => {
   };
 
   const allFeatures = async () => {
-    const response = await fetch("/api/admin/features");
+    const response = await fetch(`${baseUrl}/api/admin/features`);
     if (!response.ok) {
       console.log("Failed to fetch features.");
     } else {
@@ -35,7 +39,7 @@ const UploadCategory = () => {
 
   const handleSubmitCategory = async (event) => {
     event.preventDefault();
-    const response = await fetch("/api/admin/categories", {
+    const response = await fetch(`${baseUrl}/api/admin/categories`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +57,7 @@ const UploadCategory = () => {
   };
 
   const handleDeleteCategory = async (id) => {
-    const response = await fetch(`/api/admin/categories/${id}`, {
+    const response = await fetch(`${baseUrl}/api/admin/categories/${id}`, {
       method: "DELETE",
     });
     if (!response.ok) {
@@ -74,7 +78,7 @@ const UploadCategory = () => {
 
   const handleSubmitFeature = async (event) => {
     event.preventDefault();
-    const response = await fetch("/api/admin/features", {
+    const response = await fetch(`${baseUrl}/api/admin/features`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -92,7 +96,7 @@ const UploadCategory = () => {
   };
 
   const handleDeleteFeature = async (id) => {
-    const response = await fetch(`/api/admin/features/${id}`, {
+    const response = await fetch(`${baseUrl}/api/admin/features/${id}`, {
       method: "DELETE",
     });
     if (!response.ok) {

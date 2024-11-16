@@ -6,8 +6,13 @@ const GuestsOrders = () => {
   const [orders, setOrders] = useState([]);
   const [showNoDeleteMessage, setShowNoDeleteMessage] = useState(false);
   const navigate = useNavigate();
+  const baseUrl =
+    process.env.REACT_APP_STATUS === "development"
+      ? "http://localhost:4002"
+      : "";
+
   const fetchOrders = async () => {
-    const response = await fetch("/api/admin/orders");
+    const response = await fetch(`${baseUrl}/api/admin/orders`);
     if (!response.ok) {
       console.log("Failed to get orders.");
     } else {
@@ -29,13 +34,16 @@ const GuestsOrders = () => {
 
   const handleCheckCompleted = (id, isCompleted) => {
     const fetchThisOrder = async () => {
-      const response = await fetch(`/api/admin/orders/completed/${id}`, {
-        method: "PATCH",
-        body: JSON.stringify({ isCompleted: !isCompleted }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${baseUrl}/api/admin/orders/completed/${id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({ isCompleted: !isCompleted }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         console.log("Failed to update the order.");
@@ -48,7 +56,7 @@ const GuestsOrders = () => {
   };
 
   const handleEditOrder = async (id) => {
-    const response = await fetch(`/api/admin/orders/${id}`, {
+    const response = await fetch(`${baseUrl}/api/admin/orders/${id}`, {
       method: "PATCH",
     });
     const data = await response.json();
@@ -60,7 +68,7 @@ const GuestsOrders = () => {
   };
 
   const handleDeleteOrder = async (id) => {
-    const response = await fetch(`/api/admin/orders/${id}`, {
+    const response = await fetch(`${baseUrl}/api/admin/orders/${id}`, {
       method: "DELETE",
     });
 

@@ -8,12 +8,16 @@ const UploadRooms = () => {
   const [price, setPrice] = useState(0);
   const [category, setCategory] = useState("");
   const [pictures, setPictures] = useState([]);
+  const baseUrl =
+    process.env.REACT_APP_STATUS === "development"
+      ? "http://localhost:4002"
+      : "";
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch("/api/admin/categories");
+      const response = await fetch(`${baseUrl}/api/admin/categories`);
       if (!response.ok) {
         console.log("Failed to fetch categories.");
       } else {
@@ -37,7 +41,7 @@ const UploadRooms = () => {
       newRoom.append("pictures", pictures[i]);
     }
 
-    const response = await fetch("/api/admin/rooms", {
+    const response = await fetch(`${baseUrl}/api/admin/rooms`, {
       method: "POST",
       body: newRoom,
     });

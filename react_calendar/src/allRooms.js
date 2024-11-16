@@ -3,10 +3,14 @@ import { useNavigate, Link } from "react-router-dom";
 
 const AllRooms = () => {
   const [rooms, setRooms] = useState([]);
+  const baseUrl =
+    process.env.REACT_APP_STATUS === "development"
+      ? "http://localhost:4002"
+      : "";
 
   useEffect(() => {
     const fetchRooms = async () => {
-      const response = await fetch("/api/admin/rooms");
+      const response = await fetch(`${baseUrl}/api/admin/rooms`);
 
       if (!response.ok) {
         console.log("Failed to fetch rooms.");

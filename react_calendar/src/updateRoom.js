@@ -12,12 +12,16 @@ const UpdateRoom = () => {
   const [existingPictures, setExistingPictures] = useState([]);
   const [newPictures, setNewPictures] = useState([]);
   const [roomToUpdate, setRoomToUpdate] = useState("");
+  const baseUrl =
+    process.env.REACT_APP_STATUS === "development"
+      ? "http://localhost:4002"
+      : "";
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const response = await fetch("/api/admin/categories");
+      const response = await fetch(`${baseUrl}/api/admin/categories`);
       if (!response.ok) {
         console.log("Failed to fetch categories.");
       } else {
@@ -28,7 +32,7 @@ const UpdateRoom = () => {
     fetchCategories();
 
     const fetchRoom = async () => {
-      const response = await fetch(`/api/admin/rooms/${id}`);
+      const response = await fetch(`${baseUrl}/api/admin/rooms/${id}`);
       if (!response.ok) {
         console.log("Failed to fetch the room.", response.statusText);
       } else {

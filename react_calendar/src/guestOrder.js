@@ -6,6 +6,10 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [offerHoursLeft, setOfferHoursLeft] = useState([]);
   const [nights, setNights] = useState([]);
+  const baseUrl =
+    process.env.REACT_APP_STATUS === "development"
+      ? "http://localhost:4002"
+      : "";
 
   useEffect(() => {
     {
@@ -75,7 +79,6 @@ const Orders = () => {
 
   const makePayment = async (index) => {
     const getOrdersToPay = orders[index];
-    console.log("THIS ORDER", getOrdersToPay);
 
     const stripe = await loadStripe(
       "pk_test_51PCuAZ09yFMm4KWFLPN8qPcbYDQwfYQvUuLZ12qtQStdNMJoLrd4GaIQ6CjW7QnaFIbEDPXUgtsYIeIOYkClLQk500nYejFsni"
@@ -89,7 +92,7 @@ const Orders = () => {
       "Content-Type": "application/json",
     };
 
-    const response = await fetch("/api/payment/", {
+    const response = await fetch(`${baseUrl}/api/payment/`, {
       method: "POST",
       headers: headers,
       body: JSON.stringify(body),
