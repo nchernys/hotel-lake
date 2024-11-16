@@ -1,4 +1,12 @@
 const About = () => {
+  const hotelImages = [
+    "./images/hotel/hotel-0.jpg",
+    "./images/hotel/hotel-1.jpg",
+    "./images/hotel/hotel-5.jpg",
+    "./images/hotel/hotel-6.jpg",
+    "./images/hotel/hotel-3.jpg",
+    "./images/hotel/hotel-4.jpg",
+  ];
   return (
     <div className="w-full mx-auto flex flex-col justify-center p-5">
       <div className="w-full text-center text-3xl font-bold my-4 lg:mb-8 xl:text-5xl 2xl:text-6xl">
@@ -6,24 +14,11 @@ const About = () => {
       </div>
       <div className="w-full mx-auto flex flex-col justify-center py-5 lg:flex-row lg:w-7/12 xl:w-11/12 xl:items-start ">
         <div className="w-full h-full justify-evenly my-1  mb-10 box-border flex flex-wrap lg:w-2/6 xl:w-9/12 xl:justify-center xl:items-center">
-          <div className="m-1 w-30% lg:w-full lg:my-1 xl:w-46%">
-            <img src="./images/hotel/hotel-0.jpg" alt="hotel-img" />
-          </div>
-          <div className="m-1 w-30% lg:w-full lg:my-1 xl:w-46%">
-            <img src="./images/hotel/hotel-1.jpg" alt="hotel-img" />
-          </div>
-          <div className="m-1 w-30% lg:w-full lg:my-1 xl:w-46%">
-            <img src="./images/hotel/hotel-5.jpg" alt="hotel-img" />
-          </div>
-          <div className="m-1 w-30% lg:w-full lg:my-1 xl:w-46%">
-            <img src="./images/hotel/hotel-6.jpg" alt="hotel-img" />
-          </div>
-          <div className="m-1 w-30% lg:w-full lg:my-1 xl:w-46%">
-            <img src="./images/hotel/hotel-3.jpg" alt="hotel-img" />
-          </div>
-          <div className="m-1 w-30% lg:w-full lg:my-1 xl:w-46%">
-            <img src="./images/hotel/hotel-4.jpg" alt="hotel-img" />
-          </div>
+          {hotelImages.map((img) => (
+            <div className="m-1 w-30% lg:w-full lg:my-1 xl:w-46%">
+              <img src={img} alt="hotel-img" />
+            </div>
+          ))}
         </div>
         <div className="w-full lg:w-4/6 lg:ps-5 mb-10 px-4 box-border">
           <div className="2xl:text-2xl">
