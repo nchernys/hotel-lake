@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-const { format } = require("date-fns");
+import { calcNumNights } from "./calcNumNights";
+import { formatInTimeZone, toDate } from "date-fns-tz";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -12,47 +13,6 @@ const Orders = () => {
       : "";
 
   useEffect(() => {
-    {
-      /*
-    const fetchOrders = async () => {
-      const response = await fetch("/api/admin/orders");
-      if (!response.ok) {
-        console.log("Failed to get orders.");
-      } else {
-        const data = await response.json();
-
-        const ordersWithDateObjects = data.map((order) => ({
-          ...order,
-          dateMoveIn: new Date(order.dateMoveIn).toDateString(),
-          dateMoveOut: new Date(order.dateMoveOut).toDateString(),
-        }));
-
-        const lastOrder =
-          ordersWithDateObjects[ordersWithDateObjects.length - 1];
-
-        setOrders([lastOrder]);
-
-        const createdAt = new Date(lastOrder.createdAt);
-        let offerExpired = new Date(createdAt);
-        offerExpired = offerExpired.setHours(createdAt.getHours() + 72);
-        const today = new Date();
-        let hoursLeft = (offerExpired - today) / (1000 * 60 * 60);
-        setOfferHoursLeft(Math.round(hoursLeft));
-
-        setNights(
-          Math.floor(
-            new Date(lastOrder.dateMoveOut).getDate() -
-              new Date(lastOrder.dateMoveIn).getDate()
-          )
-        );
-        console.log(lastOrder.dateMoveOut);
-      }
-    };
-
-    fetchOrders();
-
-      */
-    }
     const today = new Date();
     const fetchOrders = JSON.parse(localStorage.getItem("hotel_orders")) || [];
     setOrders(fetchOrders);
@@ -66,10 +26,7 @@ const Orders = () => {
     });
 
     const updatedNights = fetchOrders.map((order) => {
-      const nights = Math.floor(
-        (new Date(order.dateMoveOut) - new Date(order.dateMoveIn)) /
-          (1000 * 60 * 60 * 24)
-      );
+      const nights = calcNumNights(order.dateMoveOut, order.dateMoveIn);
       return nights;
     });
 
@@ -153,13 +110,21 @@ const Orders = () => {
                     <tr>
                       <td className="w-1/3 font-bold">Move-in date:</td>
                       <td>
-                        {format(new Date(order.dateMoveIn), "MMMM d, yyyy")}
+                        {formatInTimeZone(
+                          order.dateMoveIn,
+                          "UTC",
+                          "MMMM d, yyyy"
+                        )}
                       </td>
                     </tr>
                     <tr>
                       <td className="w-1/3 font-bold">Move-out date:</td>
                       <td>
-                        {format(new Date(order.dateMoveOut), "MMMM d, yyyy")}
+                        {formatInTimeZone(
+                          order.dateMoveOut,
+                          "UTC",
+                          "MMMM d, yyyy"
+                        )}
                       </td>
                     </tr>
 

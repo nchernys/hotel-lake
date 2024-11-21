@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import Calendar from "react-calendar";
 import "./index.css";
-import { DateTime } from "luxon";
+import { format, formatInTimeZone, toDate } from "date-fns-tz";
+import { calcNumNights } from "./calcNumNights";
 
 const WebCalendar = () => {
   const { roomId, categoryId } = useParams();
@@ -20,13 +21,14 @@ const WebCalendar = () => {
   const [reservationSubmitted, setReservationSubmitted] = useState(false);
   const [showRoom, setShowRoom] = useState("");
   const [rangeOfDatesOccupied, setRangeOfDatesOccupied] = useState([]);
-  const [selectedRange, setSelectedRange] = useState("");
+  const [selectedRange, setSelectedRange] = useState([]);
   const [rangeToBook, setRangeToBook] = useState([]);
   const [unavailableDatesRange, setUnavailableDatesRange] = useState([]);
   const [datesUnavailableAlert, setDatesUnavailableAlert] = useState(false);
   const [dateClicked, setDateClicked] = useState("");
   const [isStartOver, setIsStartOver] = useState(false);
   const [newOrderCreated, setNewOrderCreated] = useState("");
+  const [dateCount, setDateCount] = useState(0);
   const baseUrl =
     process.env.REACT_APP_STATUS === "development"
       ? "http://localhost:4002"
@@ -83,9 +85,8 @@ const WebCalendar = () => {
     fetchDatesOccupied();
   }, [showRoomId]);
 
-  const nightsOfStay = Math.floor(
-    (new Date(moveoutDate) - new Date(moveinDate)) / (1000 * 60 * 60 * 24)
-  );
+  const nightsOfStay = calcNumNights(moveoutDate, moveinDate);
+
   const totalToPay = showRoom.price * nightsOfStay;
 
   const handleSubmitReservation = async (e) => {
@@ -98,25 +99,6 @@ const WebCalendar = () => {
       day: "numeric",
     };
 
-    if (moveinDate && moveoutDate) {
-      const orderedOnSave = orderedOn.toLocaleDateString("en-US", options);
-      const selectedMoveinDate = moveinDate.toLocaleDateString(
-        "en-US",
-        options
-      );
-      const selectedMoveoutDate = moveoutDate.toLocaleDateString(
-        "en-US",
-        options
-      );
-    }
-
-    const saveToDBISOMoveInDate = DateTime.fromJSDate(
-      new Date(moveinDate)
-    ).toISO();
-    const saveToDBISOMoveOutDate = DateTime.fromJSDate(
-      new Date(moveoutDate)
-    ).toISO();
-
     if (firstName && lastName && moveinDate && moveoutDate) {
       const newOrder = {
         guestFirstName: firstName,
@@ -126,8 +108,8 @@ const WebCalendar = () => {
         roomId: showRoom._id,
         roomPrice: showRoom.price,
         roomName: showRoom.name,
-        dateMoveIn: saveToDBISOMoveInDate,
-        dateMoveOut: saveToDBISOMoveOutDate,
+        dateMoveIn: moveinDate,
+        dateMoveOut: moveoutDate,
         createdAt: new Date(),
       };
 
@@ -141,21 +123,6 @@ const WebCalendar = () => {
         "hotel_orders",
         JSON.stringify(getOrdersfromLocalStorage)
       );
-      {
-        /*
-      const createOrder = await fetch("/api/admin/orders", {
-        method: "POST",
-        body: JSON.stringify(newOrder),
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (!createOrder.ok) {
-        console.log("Failed to create an order.");
-      } else {
-        const data = await createOrder.json();
-      }
-    */
-      }
 
       setReservationSubmitted(true);
 
@@ -176,10 +143,15 @@ const WebCalendar = () => {
   };
 
   const handleSelectRange = (value) => {
-    setIsStartOver(false);
     setSelectedRange(value);
-    setMoveinDate(value[0]);
-    setMoveoutDate(value[1]);
+    const moveInDate = new Date(
+      Date.UTC(value[0].getFullYear(), value[0].getMonth(), value[0].getDate())
+    );
+    setMoveinDate(moveInDate);
+    const moveOutDate = new Date(
+      Date.UTC(value[1].getFullYear(), value[1].getMonth(), value[1].getDate())
+    );
+    setMoveoutDate(moveOutDate);
     setIsMoveinSubmitted(true);
     setIsMoveoutSubmitted(true);
 
@@ -389,6 +361,9 @@ const WebCalendar = () => {
                   value={selectedRange}
                   onClickDay={(date) => {
                     setDateClicked(date);
+                    setDateCount((prevDate) =>
+                      prevDate < 1 ? prevDate + 1 : 0
+                    );
                   }}
                   onChange={handleSelectRange}
                   tileDisabled={({ date }) =>
@@ -425,7 +400,11 @@ const WebCalendar = () => {
                         rangeDate.getMonth() === date.getMonth() &&
                         rangeDate.getDate() === date.getDate()
                     );
-                    if (isInRange && unavailableDatesRange.length === 0) {
+                    if (
+                      isInRange &&
+                      unavailableDatesRange.length === 0 &&
+                      dateCount < 1
+                    ) {
                       return "date-focus";
                     } else {
                       return "date-focus-none";
@@ -452,14 +431,14 @@ const WebCalendar = () => {
                 {isMoveinSubmitted &&
                   unavailableDatesRange.length === 0 &&
                   moveinDate &&
-                  moveinDate.toDateString()}
+                  formatInTimeZone(moveinDate, "UTC", "yyyy-MM-dd")}
               </p>
               <p className="invoice-cart my-1">
                 <strong>Move-out date:</strong>{" "}
                 {isMoveoutSubmitted &&
                   unavailableDatesRange.length === 0 &&
                   moveoutDate &&
-                  moveoutDate.toDateString()}
+                  formatInTimeZone(moveoutDate, "UTC", "yyyy-MM-dd")}
               </p>
               <p className="invoice-cart my-1">
                 <strong>Nights:</strong>{" "}

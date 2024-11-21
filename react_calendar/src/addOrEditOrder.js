@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DateTime } from "luxon";
+import { calcNumNights } from "./calcNumNights";
+import { formatInTimeZone, toDate } from "date-fns-tz";
 
 const OrderForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
   const [roomSelected, setRoomSelected] = useState("");
-  const [formattedDateMoveIn, setFormattedDateMoveIn] = useState("");
-  const [formattedDateMoveOut, setFormattedDateMoveOut] = useState("");
 
   const [updatedOrder, setUpdatedOrder] = useState({
     guestFirstName: "",
@@ -50,25 +50,16 @@ const OrderForm = () => {
     }
   };
 
-  const getDates = (translateDate) => {
-    const getThisDate = new Date(translateDate);
-    const year = getThisDate.getFullYear();
-    const month = (getThisDate.getMonth() + 1).toString().padStart(2, "0");
-    const day = getThisDate.getDate().toString().padStart(2, "0");
-    const getFormattedDate = `${year}-${month}-${day}`;
-    return getFormattedDate;
-  };
-
   useEffect(() => {
     handleTotalPriceUpdateDates();
   }, [updatedOrder.dateMoveIn, updatedOrder.dateMoveOut]);
 
   const handleTotalPriceUpdateDates = async () => {
-    const difference =
-      new Date(updatedOrder.dateMoveOut).getDate() -
-      new Date(updatedOrder.dateMoveIn).getDate();
-
-    const calcTotalToPay = Math.round(updatedOrder.roomId.price * difference);
+    const nights = calcNumNights(
+      updatedOrder.dateMoveOut,
+      updatedOrder.dateMoveIn
+    );
+    const calcTotalToPay = Math.round(updatedOrder.roomId.price * nights);
     setUpdatedOrder({
       ...updatedOrder,
       totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
@@ -82,15 +73,16 @@ const OrderForm = () => {
   }, [updatedOrder.roomId]);
 
   const handleTotalPriceUpdateRoom = async () => {
+    console.log("ROOM ID", updatedOrder.roomId);
     const response = await fetch(`/api/admin/rooms/${updatedOrder.roomId}`);
     if (response.ok) {
       const data = await response.json();
-      const difference =
-        new Date(updatedOrder.dateMoveOut) - new Date(updatedOrder.dateMoveIn);
-      let calcTotalToPay = 0;
-      calcTotalToPay = Math.round(
-        data.price * Math.round(difference / (1000 * 60 * 60 * 24))
+      const nights = calcNumNights(
+        updatedOrder.dateMoveOut,
+        updatedOrder.dateMoveIn
       );
+      let calcTotalToPay = 0;
+      calcTotalToPay = Math.round(data.price * nights);
       setUpdatedOrder({
         ...updatedOrder,
         totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
@@ -145,11 +137,16 @@ const OrderForm = () => {
         <input
           className="my-1 p-2 border-dark border-2"
           type="date"
-          value={getDates(updatedOrder.dateMoveIn)}
+          id="dateMoveIn"
+          value={formatInTimeZone(updatedOrder.dateMoveIn, "UTC", "yyyy-MM-dd")}
           onChange={(event) => {
+            const selectedDate = event.target.value;
+            const utcDate = toDate(`${selectedDate}T00:00:00`, {
+              timeZone: "UTC",
+            });
             setUpdatedOrder({
               ...updatedOrder,
-              dateMoveIn: DateTime.fromISO(event.target.value).toJSDate(),
+              dateMoveIn: utcDate.toISOString(),
             });
           }}
         />
@@ -157,13 +154,21 @@ const OrderForm = () => {
         <input
           className="my-1 p-2 border-dark border-2"
           type="date"
-          value={getDates(updatedOrder.dateMoveOut)}
+          id="dateMoveIn"
+          value={formatInTimeZone(
+            updatedOrder.dateMoveOut,
+            "UTC",
+            "yyyy-MM-dd"
+          )}
           onChange={(event) => {
+            const selectedDate = event.target.value;
+            const utcDate = toDate(`${selectedDate}T00:00:00`, {
+              timeZone: "UTC",
+            });
             setUpdatedOrder({
               ...updatedOrder,
-              dateMoveOut: DateTime.fromISO(event.target.value).toJSDate(),
+              dateMoveOut: utcDate.toISOString(),
             });
-            console.log();
           }}
         />
         <label className="my-1 py-2">Room</label>

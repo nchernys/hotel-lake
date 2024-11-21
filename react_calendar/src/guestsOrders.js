@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PDFGenerator from "./pdfInvoice";
+import { calcNumNights } from "./calcNumNights";
+import { formatInTimeZone, toDate } from "date-fns-tz";
 
 const GuestsOrders = () => {
+  const { format } = require("date-fns");
   const [orders, setOrders] = useState([]);
   const [showNoDeleteMessage, setShowNoDeleteMessage] = useState(false);
   const navigate = useNavigate();
@@ -18,13 +21,7 @@ const GuestsOrders = () => {
     } else {
       const data = await response.json();
 
-      const ordersWithDateObjects = data.map((order) => ({
-        ...order,
-        dateMoveIn: new Date(order.dateMoveIn).toDateString(),
-        dateMoveOut: new Date(order.dateMoveOut).toDateString(),
-      }));
-
-      setOrders(ordersWithDateObjects);
+      setOrders(data);
     }
   };
 
@@ -135,13 +132,33 @@ const GuestsOrders = () => {
                     <td className="w-1/3 font-bold">Room name:</td>
                     <td>{order.roomId.name}</td>
                   </tr>
+
                   <tr>
                     <td className="w-1/3 font-bold">Move-in date:</td>
-                    <td>{order.dateMoveIn}</td>
+                    <td>
+                      {formatInTimeZone(
+                        order.dateMoveIn,
+                        "UTC",
+                        "MMMM d, yyyy"
+                      )}
+                    </td>
                   </tr>
                   <tr>
                     <td className="w-1/3 font-bold">Move-out date:</td>
-                    <td>{order.dateMoveOut}</td>
+                    <td>
+                      {" "}
+                      {formatInTimeZone(
+                        order.dateMoveOut,
+                        "UTC",
+                        "MMMM d, yyyy"
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="w-1/3 font-bold">Nights: </td>
+                    <td>
+                      {calcNumNights(order.dateMoveOut, order.dateMoveIn)}
+                    </td>
                   </tr>
                   <tr>
                     <td className="w-1/3 font-bold">Price (night):</td>
