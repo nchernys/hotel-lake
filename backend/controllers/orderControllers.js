@@ -1,5 +1,28 @@
 const Order = require("../models/orderModel");
 
+const transporter = nodemailer.createTransport({
+  host: "smtp.hostinger.com",
+
+  auth: {
+    user: "natalia@nchernysheva.com ",
+    pass: "Natageos=77",
+  },
+});
+
+const sendEmail = async () => {
+  try {
+    await transporter.sendMail({
+      from: "natalia@nchernysheva.com",
+      to: "natasha.e.chernysheva@gmail.com",
+      subject: "HOTEL PROJECT: New order created",
+      text: "New order created",
+    });
+    console.log("Email sent successfully");
+  } catch (error) {
+    console.error("Error sending email:", error.message);
+  }
+};
+
 const getAllOrders = async (req, res) => {
   try {
     const orders = await Order.find({}).populate("roomId").exec();
@@ -20,7 +43,7 @@ const addNewOrder = async (req, res) => {
     dateMoveOut,
   } = req.body;
 
-  console.log("CREATING NEW ORDER", req.body);
+  await sendEmail();
   try {
     const newOrder = await Order.create({
       guestFirstName,
