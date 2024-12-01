@@ -6,27 +6,34 @@ const orderSchema = new Schema(
   {
     guestFirstName: {
       type: String,
+      required: true,
     },
     guestLastName: {
       type: String,
+      required: true,
     },
     categoryId: {
       type: Schema.Types.ObjectId,
       ref: "Category",
+      required: true,
     },
 
     roomId: {
       type: Schema.Types.ObjectId,
       ref: "Room",
+      required: true,
     },
     dateMoveIn: {
       type: String,
+      required: true,
     },
     dateMoveOut: {
       type: String,
+      required: true,
     },
     totalToPay: {
       type: Number,
+      required: true,
     },
   },
   { timestamps: true }

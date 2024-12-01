@@ -19,6 +19,16 @@ const addNewOrder = async (req, res) => {
     dateMoveIn,
     dateMoveOut,
   } = req.body;
+  if (
+    !guestFirstName ||
+    !guestLastName ||
+    !totalToPay ||
+    !roomId ||
+    !dateMoveIn ||
+    !dateMoveOut
+  ) {
+    return res.status(400).json({ error: "Reservation data is missing." });
+  }
 
   try {
     const newOrder = await Order.create({
@@ -32,7 +42,7 @@ const addNewOrder = async (req, res) => {
 
     res.status(200).json(newOrder);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 };
 
