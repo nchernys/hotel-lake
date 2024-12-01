@@ -20,7 +20,6 @@ const PaymentSuccess = () => {
       let localStorageItems =
         JSON.parse(localStorage.getItem("hotel_orders")) || [];
 
-      console.log(localStorageItems, data);
       data.forEach((dbOrder) => {
         const matchingOrder = localStorageItems.find(
           (item) =>
@@ -34,7 +33,7 @@ const PaymentSuccess = () => {
         if (!matchingOrder) {
           console.log("No matching order was found.");
         } else {
-          console.log("Matching order found in localStorage:", matchingOrder);
+          console.log("Matching order found in localStorage");
 
           // Filter out the matching order from localStorageItems
           localStorageItems = localStorageItems.filter(
