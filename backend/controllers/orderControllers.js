@@ -1,4 +1,5 @@
 const Order = require("../models/orderModel");
+const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.hostinger.com",
