@@ -34,6 +34,7 @@ const addNewOrder = async (req, res) => {
     console.log("CREATED NEW ORDER");
     res.status(200).json(newOrder);
   } catch (error) {
+    console.log("FAILED TO CREATE NEW ORDER", error);
     return res.status(400).json({ error: error.message });
   }
 };
