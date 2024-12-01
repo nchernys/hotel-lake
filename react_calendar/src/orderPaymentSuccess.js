@@ -16,11 +16,9 @@ const PaymentSuccess = () => {
 
       const data = await response.json();
       setOrders(data);
-      console.log("SUCCESS", data);
 
       let localStorageItems =
         JSON.parse(localStorage.getItem("hotel_orders")) || [];
-      console.log("localStorageItemsFetched", localStorageItems);
 
       data.forEach((dbOrder) => {
         const matchingOrder = localStorageItems.find(
@@ -52,8 +50,6 @@ const PaymentSuccess = () => {
           );
         }
       });
-
-      console.log("UPDATED STORAGE", localStorageItems);
     };
 
     getOrders();

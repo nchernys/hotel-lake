@@ -41,7 +41,7 @@ router.post(
       request.body = orderDetails;
 
       try {
-        console.log("ABOUT TO CREATE NEW ORDER");
+        console.log("ABOUT TO CREATE NEW ORDER", request.body);
         await addNewOrder(request, response);
       } catch (error) {
         console.error("Error creating order:", error.message);
