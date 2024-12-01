@@ -5,8 +5,8 @@ const transporter = nodemailer.createTransport({
   host: "smtp.hostinger.com",
 
   auth: {
-    user: "natalia@nchernysheva.com ",
-    pass: "Natageos=77",
+    user: process.env.EMAIL_ADDRESS,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
