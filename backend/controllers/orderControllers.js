@@ -20,6 +20,7 @@ const addNewOrder = async (req, res) => {
     dateMoveOut,
   } = req.body;
 
+  console.log("CREATING NEW ORDER", req.body);
   try {
     const newOrder = await Order.create({
       guestFirstName,
@@ -30,6 +31,7 @@ const addNewOrder = async (req, res) => {
       dateMoveOut,
     });
 
+    console.log("CREATED NEW ORDER");
     res.status(200).json(newOrder);
   } catch (error) {
     return res.status(400).json({ error: error.message });
