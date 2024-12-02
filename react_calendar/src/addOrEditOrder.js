@@ -15,7 +15,7 @@ const OrderForm = () => {
     guestLastName: "",
     totalToPay: "",
     categoryId: "",
-    roomId: "",
+    roomId: null,
     dateMoveIn: new Date(),
     dateMoveOut: new Date(),
   });
@@ -27,6 +27,7 @@ const OrderForm = () => {
   useEffect(() => {
     fetchRooms();
     fetchOrder(id);
+    console.log("UPDATED ORDER", updatedOrder);
   }, []);
 
   const fetchRooms = async () => {
@@ -45,7 +46,16 @@ const OrderForm = () => {
       console.log("Failed to fetch the order.");
     } else {
       const data = await response.json();
-      setUpdatedOrder(data);
+      setUpdatedOrder({
+        ...updatedOrder,
+        guestFirstName: data.guestFirstName,
+        guestLastName: data.guestLastName,
+        totalToPay: data.totalToPay,
+        categoryId: data.categoryId,
+        roomId: data.roomId,
+        dateMoveIn: new Date(data.dateMoveIn),
+        dateMoveOut: new Date(data.dateMoveOut),
+      });
       setRoomSelected(data.roomId);
     }
   };
@@ -59,7 +69,8 @@ const OrderForm = () => {
       updatedOrder.dateMoveOut,
       updatedOrder.dateMoveIn
     );
-    const calcTotalToPay = Math.round(updatedOrder.roomId.price * nights);
+    const calcTotalToPay = Math.round(updatedOrder?.roomId?.price * nights);
+    console.log("ROOM - NIGHTS", nights, calcTotalToPay);
     setUpdatedOrder({
       ...updatedOrder,
       totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
@@ -73,21 +84,17 @@ const OrderForm = () => {
   }, [updatedOrder.roomId]);
 
   const handleTotalPriceUpdateRoom = async () => {
-    console.log("ROOM ID", updatedOrder.roomId);
-    const response = await fetch(`/api/admin/rooms/${updatedOrder.roomId}`);
-    if (response.ok) {
-      const data = await response.json();
-      const nights = calcNumNights(
-        updatedOrder.dateMoveOut,
-        updatedOrder.dateMoveIn
-      );
-      let calcTotalToPay = 0;
-      calcTotalToPay = Math.round(data.price * nights);
-      setUpdatedOrder({
-        ...updatedOrder,
-        totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
-      });
-    }
+    console.log("updatedOrder.roomId", updatedOrder.roomId._id);
+    const nights = calcNumNights(
+      updatedOrder.dateMoveOut,
+      updatedOrder.dateMoveIn
+    );
+    const calcTotalToPay = Math.round(updatedOrder.roomId.price * nights);
+    console.log("ROOM - NIGHTS", nights, calcTotalToPay);
+    setUpdatedOrder({
+      ...updatedOrder,
+      totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
+    });
   };
 
   const handleFormSubmit = async (e) => {
@@ -173,19 +180,22 @@ const OrderForm = () => {
         />
         <label className="my-1 py-2">Room</label>
         <select
-          value={updatedOrder.roomId._id}
+          value={updatedOrder?.roomId?._id}
           className="my-1 p-2 border-dark border-2"
           onChange={(event) => {
+            const selectedRoom = rooms.find(
+              (room) => room._id === event.target.value
+            );
             setUpdatedOrder({
               ...updatedOrder,
-              roomId: event.target.value,
+              roomId: selectedRoom,
             });
           }}
         >
           <option>Select room</option>
           {rooms &&
-            rooms.map((room) => (
-              <option key={room._id} value={room._id}>
+            rooms.map((room, i) => (
+              <option key={i} value={room._id}>
                 {room.name}
               </option>
             ))}
@@ -195,6 +205,7 @@ const OrderForm = () => {
           className="my-1 p-2 border-dark border-2"
           type="number"
           value={updatedOrder.totalToPay}
+          readOnly
         />
         <button
           type="submit"
