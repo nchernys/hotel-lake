@@ -24,7 +24,7 @@ const ChooseRoom = () => {
   };
 
   useEffect(() => {
-    preloadImage("/images/lobby/hotel-lobby.webp");
+    preloadImage("/images/lobby/hotel-choose.webp");
   }, []);
 
   useEffect(() => {
@@ -76,12 +76,12 @@ const ChooseRoom = () => {
     <>
       <div className="w-auto h-96 overflow-hidden">
         <img
-          src="/images/lobby/hotel-lobby.webp"
+          src="/images/lobby/hotel-choose.webp"
           alt="Loading..."
           onError={() => setImageError(true)}
           className="w-full h-full object-cover"
           style={{
-            objectPosition: "50% 65%",
+            objectPosition: "50% 58%",
           }}
         />
       </div>
