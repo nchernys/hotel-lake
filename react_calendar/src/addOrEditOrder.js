@@ -27,7 +27,6 @@ const OrderForm = () => {
   useEffect(() => {
     fetchRooms();
     fetchOrder(id);
-    console.log("UPDATED ORDER", updatedOrder);
   }, []);
 
   const fetchRooms = async () => {
@@ -70,7 +69,6 @@ const OrderForm = () => {
       updatedOrder.dateMoveIn
     );
     const calcTotalToPay = Math.round(updatedOrder?.roomId?.price * nights);
-    console.log("ROOM - NIGHTS", nights, calcTotalToPay);
     setUpdatedOrder({
       ...updatedOrder,
       totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
@@ -84,13 +82,11 @@ const OrderForm = () => {
   }, [updatedOrder.roomId]);
 
   const handleTotalPriceUpdateRoom = async () => {
-    console.log("updatedOrder.roomId", updatedOrder.roomId._id);
     const nights = calcNumNights(
       updatedOrder.dateMoveOut,
       updatedOrder.dateMoveIn
     );
     const calcTotalToPay = Math.round(updatedOrder.roomId.price * nights);
-    console.log("ROOM - NIGHTS", nights, calcTotalToPay);
     setUpdatedOrder({
       ...updatedOrder,
       totalToPay: calcTotalToPay > 0 ? calcTotalToPay : 0,
