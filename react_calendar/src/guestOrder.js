@@ -96,19 +96,19 @@ const Orders = () => {
                   <thead></thead>
                   <tbody>
                     <tr>
-                      <td className="w-1/3 font-bold pe-4">First name:</td>
+                      <td className=" font-bold pe-2">First name:</td>
                       <td>{order.guestFirstName}</td>
                     </tr>
                     <tr>
-                      <td className="w-1/3 font-bold pe-4">Last name:</td>
+                      <td className=" font-bold pe-2">Last name:</td>
                       <td>{order.guestLastName}</td>
                     </tr>
                     <tr>
-                      <td className="w-1/3 font-bold pe-4">Room name:</td>
+                      <td className="w-1/3 font-bold pe-2">Room name:</td>
                       <td>{order.roomName}</td>
                     </tr>
                     <tr>
-                      <td className="w-1/3 font-bold pe-4">Move-in date:</td>
+                      <td className="font-bold pe-2">Move-in date:</td>
                       <td>
                         {formatInTimeZone(
                           order.dateMoveIn,
@@ -118,7 +118,7 @@ const Orders = () => {
                       </td>
                     </tr>
                     <tr>
-                      <td className="w-1/3 font-bold pe-4">Move-out date:</td>
+                      <td className="font-bold pe-2">Move-out date:</td>
                       <td>
                         {formatInTimeZone(
                           order.dateMoveOut,
@@ -129,16 +129,16 @@ const Orders = () => {
                     </tr>
 
                     <tr>
-                      <td className="w-1/3 font-bold pe-4">Price (night):</td>
+                      <td className="w-auto font-bold pe-2">Price (night):</td>
                       <td>${order.roomPrice.toFixed(2)}</td>
                     </tr>
 
                     <tr>
-                      <td className="w-1/3 font-bold pe-4">Nights:</td>
+                      <td className="w-auto font-bold pe-2">Nights:</td>
                       <td>{nights[i]}</td>
                     </tr>
                     <tr>
-                      <td className="w-1/3 font-bold pe-4">Total cost:</td>
+                      <td className=" font-bold pe-2">Total cost:</td>
                       <td>${order.totalToPay.toFixed(2)}</td>
                     </tr>
 

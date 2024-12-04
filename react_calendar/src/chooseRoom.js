@@ -91,7 +91,7 @@ const ChooseRoom = () => {
           {categories.map((category) => (
             <div
               key={category._id}
-              className="flex flex-col w-full md:w-1/4 py-1 mx-3 category-box"
+              className="flex flex-col w-auto py-1 mx-2 category-box"
             >
               <div
                 className="text-xl me-5 font-bold w-auto flex flex-row justify-between items-center py-5 border-b-2 cursor-pointer"
