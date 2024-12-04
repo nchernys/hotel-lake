@@ -83,7 +83,7 @@ const Orders = () => {
   return (
     <>
       <div className="w-full mx-auto gap-5 my-1 px-5 pt-5 pb-[5rem] mt-[5rem] relative flex  items-center flex-col lg:flex-row lg:items-start lg:gap-[8rem] lg:justify-center lg:w-10/12">
-        <div className="min-w-[20rem] px-2 flex flex-col">
+        <div className="min-w-[10rem] sm:min-w-[20rem] px-2 pb-[5rem] flex flex-col">
           <h1 className="text-3xl font-bold flex justify-between items-end">
             <span>Your Reservations</span>
           </h1>
@@ -96,19 +96,19 @@ const Orders = () => {
                   <thead></thead>
                   <tbody>
                     <tr>
-                      <td className="w-1/3 font-bold">First name:</td>
+                      <td className="w-1/3 font-bold pe-4">First name:</td>
                       <td>{order.guestFirstName}</td>
                     </tr>
                     <tr>
-                      <td className="w-1/3 font-bold">Last name:</td>
+                      <td className="w-1/3 font-bold pe-4">Last name:</td>
                       <td>{order.guestLastName}</td>
                     </tr>
                     <tr>
-                      <td className="w-1/3 font-bold">Room name:</td>
+                      <td className="w-1/3 font-bold pe-4">Room name:</td>
                       <td>{order.roomName}</td>
                     </tr>
                     <tr>
-                      <td className="w-1/3 font-bold">Move-in date:</td>
+                      <td className="w-1/3 font-bold pe-4">Move-in date:</td>
                       <td>
                         {formatInTimeZone(
                           order.dateMoveIn,
@@ -118,7 +118,7 @@ const Orders = () => {
                       </td>
                     </tr>
                     <tr>
-                      <td className="w-1/3 font-bold">Move-out date:</td>
+                      <td className="w-1/3 font-bold pe-4">Move-out date:</td>
                       <td>
                         {formatInTimeZone(
                           order.dateMoveOut,
@@ -129,16 +129,16 @@ const Orders = () => {
                     </tr>
 
                     <tr>
-                      <td className="w-1/3 font-bold">Price (night):</td>
+                      <td className="w-1/3 font-bold pe-4">Price (night):</td>
                       <td>${order.roomPrice.toFixed(2)}</td>
                     </tr>
 
                     <tr>
-                      <td className="w-1/3 font-bold">Nights:</td>
+                      <td className="w-1/3 font-bold pe-4">Nights:</td>
                       <td>{nights[i]}</td>
                     </tr>
                     <tr>
-                      <td className="w-1/3 font-bold">Total cost:</td>
+                      <td className="w-1/3 font-bold pe-4">Total cost:</td>
                       <td>${order.totalToPay.toFixed(2)}</td>
                     </tr>
 
@@ -159,7 +159,7 @@ const Orders = () => {
                 <div>
                   <button
                     disabled={offerHoursLeft[i] < 0 ? true : false}
-                    className={`py-2 w-32 px-3 text-white my-8 text-center rounded me-1 mb-1 ${
+                    className={`py-2 w-32 px-3 text-white my-8 text-center me-8 rounded me-1 mb-1 ${
                       offerHoursLeft[i] < 0 ? "bg-gray-400" : "bg-red-500"
                     }`}
                     onClick={() => makePayment(i)}
@@ -167,7 +167,7 @@ const Orders = () => {
                     Payment
                   </button>
                   <button
-                    className={`py-2 w-32 px-3 text-white ms-8  text-center rounded bg-gray-400   `}
+                    className={`py-2 w-32 px-3 text-white text-center rounded bg-gray-400   `}
                     onClick={() => handleDeleteRoomReservation(i)}
                   >
                     Delete
@@ -187,7 +187,7 @@ const Orders = () => {
             />
             +39 (120) 920 3845
           </p>
-          <p className="flex items-center my-2">
+          <p className="flex items-center my-2 word-break: break-all">
             <img
               className="me-5 my-0.5 w-8"
               src="./icons/email-icon.png"
