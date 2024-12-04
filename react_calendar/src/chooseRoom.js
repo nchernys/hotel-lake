@@ -24,7 +24,7 @@ const ChooseRoom = () => {
   };
 
   useEffect(() => {
-    preloadImage("/images/lobby/hotel-choose.webp");
+    preloadImage("/images/lobby/hotel-lobby-6.webp");
   }, []);
 
   useEffect(() => {
@@ -74,30 +74,33 @@ const ChooseRoom = () => {
 
   return (
     <>
-      <div className="w-auto h-96 overflow-hidden">
+      <div className="w-auto h-[63%] overflow-hidden">
         <img
-          src="/images/lobby/hotel-choose.webp"
+          src="/images/lobby/hotel-lobby-6.webp"
           alt="Loading..."
           onError={() => setImageError(true)}
           className="w-full h-full object-cover"
           style={{
-            objectPosition: "50% 58%",
+            objectPosition: "50% 23%",
           }}
         />
       </div>
 
-      <div className="w-full sm:w-4/5 mx-auto mt-1 mb-5 p-3 box-border relative scrolling">
-        <div className="flex flex-col w-9/12 h-full mx-auto flex-wrap justify-between my-0 sm:w-10/12 sm:flex-row sm:my-5">
+      <div className="w-full px-[3rem] mt-1 mb-5 py-3 box-border relative scrolling">
+        <div className="flex flex-col w-full h-full mx-auto flex-wrap justify-between my-0 lg:w-11/12 sm:flex-row my-5">
           {categories.map((category) => (
-            <div key={category._id} className="flex flex-col py-1 category-box">
+            <div
+              key={category._id}
+              className="flex flex-col w-full md:w-1/4 py-1 mx-3 category-box"
+            >
               <div
-                className="text-2xl me-5 font-bold w-auto flex flex-row justify-between items-center py-5 border-b-2 cursor-pointer"
+                className="text-xl me-5 font-bold w-auto flex flex-row justify-between items-center py-5 border-b-2 cursor-pointer"
                 onClick={() => handleVisible(category._id)}
               >
                 <span className="pe-5">{category.name} Rooms</span>
-                <span>
+                <span className="hidden">
                   <img
-                    className={`w-8 h-6 ${
+                    className={`w-8 h-4 ${
                       isVisible && category._id === selectedCatId
                         ? "transform rotate-180"
                         : "transform rotate-0"
@@ -109,10 +112,8 @@ const ChooseRoom = () => {
               </div>
 
               <div
-                className={`w-auto h-auto flex flex-col py-5 bg-white ${
-                  isVisible && category._id === selectedCatId
-                    ? "visible"
-                    : "hidden"
+                className={`w-auto h-auto flex flex-col py-5 bg-white   ${
+                  isVisible && category._id === selectedCatId ? "visible" : ""
                 }`}
               >
                 {rooms

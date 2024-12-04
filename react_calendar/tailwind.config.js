@@ -10,6 +10,9 @@ module.exports = {
       boxShadow: {
         "3xl": "0 35px 60px -15px rgba(0, 0, 0, 1)",
       },
+      borderWidth: {
+        1: "1px",
+      },
       width: {
         "30%": "30%",
         "46%": "46%",
@@ -27,6 +30,28 @@ module.exports = {
       },
       translate: {
         "10%": "17%",
+      },
+      scale: {
+        175: "1.75",
+        200: "2",
+        250: "2.5",
+        300: "3",
+      },
+
+      keyframes: {
+        expandBtn: {
+          "0%": {
+            transform: "translate(100%, -25%) scale(0)",
+            opacity: "0.2",
+          },
+          "100%": {
+            transform: "translate(100%, -25%) scale(3)",
+            opacity: "0",
+          },
+        },
+      },
+      animation: {
+        expandBtn: "expandBtn 0.5s ease-out forwards",
       },
     },
   },

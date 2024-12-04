@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&family=Monofett&family=Quicksand:wght@300..700&display=swap');
 
 html,
 body {
@@ -8,7 +9,8 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-size: 14px;
+  font-size: 16px;
+  font-family: "Quicksand", sans-serif;
   color: #323b46e2;
   box-sizing: border-box;
   overflow-y: scroll;
@@ -78,7 +80,7 @@ body {
   background-size: cover;
   background-position: center;
   width: 100vw;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 55px);
   position: relative;
 }
 
@@ -192,4 +194,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@media screen and (min-width: 1500px) {
+  html {
+    font-size: 20px;
+  }
 }
