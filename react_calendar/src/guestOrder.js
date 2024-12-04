@@ -82,8 +82,8 @@ const Orders = () => {
 
   return (
     <>
-      <div className="w-full mx-auto gap-5 my-1 px-2 py-5 mt-[5rem] relative flex  items-center flex-col lg:flex-row lg:items-start lg:justify-center lg:w-9/12">
-        <div className="min-w-[23rem] px-2 flex flex-col">
+      <div className="w-full mx-auto gap-5 my-1 px-5 pt-5 pb-[5rem] mt-[5rem] relative flex  items-center flex-col lg:flex-row lg:items-start lg:gap-[8rem] lg:justify-center lg:w-10/12">
+        <div className="min-w-[20rem] px-2 flex flex-col">
           <h1 className="text-3xl font-bold flex justify-between items-end">
             <span>Your Reservations</span>
           </h1>
@@ -177,7 +177,7 @@ const Orders = () => {
             ))
           )}
         </div>
-        <div className="min-w-[22rem] w-[22rem] px-5 h-max flex flex-col justify-evenly border-4">
+        <div className="min-w-[15rem] px-5 box-border h-max flex flex-col justify-evenly border-4">
           <div className="text-2xl my-5">Contact Us</div>
           <p className="flex items-center my-2">
             <img
