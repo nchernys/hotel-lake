@@ -25,6 +25,10 @@ const navLinks = [
     label: "ORDERS",
     link: "/orders",
   },
+  {
+    label: "ADMIN",
+    link: "/admin",
+  },
 ];
 function Navigation() {
   const [menuShow, setMenuShow] = useState(false);
