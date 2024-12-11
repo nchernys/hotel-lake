@@ -31,7 +31,18 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="home-overlay hidden md:flex">
+        <div className="home-overlay hidden md:flex md:flex-row">
+          <div className=" text-7xl opacity-1 text-white font-bold">
+            <div className="overflow-hidden">
+              <div className="title-word-1 pb-2">Mountain</div>
+            </div>
+            <div className="overflow-hidden">
+              <div className="title-word-2 py-2">Lake</div>
+            </div>
+            <div className="overflow-hidden">
+              <div className="title-word-3 py-2">Resort</div>
+            </div>
+          </div>
           <div
             className={`home-overlay-inner ${
               isVisible ? "visible-blob" : "hidden-blob"
