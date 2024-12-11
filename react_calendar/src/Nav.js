@@ -53,7 +53,12 @@ function Navigation() {
             <FontAwesomeIcon className="text-2xl opacity-80" icon={faSpa} />
           </div>
           {navLinks.map((item) => (
-            <div className="me-12 opacity-80 hover:opacity-80 transition duration-300 ease-in-out group flex items-center relative">
+            <div
+              className={`me-12 opacity-80 hover:opacity-80 transition duration-300 ease-in-out group flex items-center relative ${
+                item.label === "ADMIN" ? "hidden" : ""
+              }`}
+              to={`${item.link}`}
+            >
               <Link
                 className="text-lg transition-opacity duration-300 ease-in-out group-hover:opacity-100"
                 to={`${item.link}`}

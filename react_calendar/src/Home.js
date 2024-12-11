@@ -26,7 +26,7 @@ const Home = () => {
             <div className="title-word-3 py-2">Resort</div>
           </div>
           <div className="overflow-hidden">
-            <div className="title-word-4 mt-20 w-60 py-4 text-3xl flex justify-center bg-blue-400 sm:text-3xl sm:font-normal sm:w-72 sm:py-5">
+            <div className="title-word-4 mt-20 w-60 py-4 rounded-full text-3xl flex justify-center bg-blue-400 sm:text-3xl sm:font-normal sm:w-72 sm:py-5">
               <Link to="/choose-room">Book a room</Link>
             </div>
           </div>

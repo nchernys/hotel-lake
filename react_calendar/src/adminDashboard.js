@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Admin = () => {
   return (
-    <div className="w-7/12 mt-16 mx-auto">
+    <div className="w-11/12 md:w-7/12 mt-16 mx-auto">
       <div className="text-4xl font-bold  my-5"> Admin Dashboard </div>
       <div className="flex">
         <div className="w-1/2">

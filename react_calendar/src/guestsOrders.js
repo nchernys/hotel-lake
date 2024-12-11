@@ -99,7 +99,7 @@ const GuestsOrders = () => {
           </p>
         </div>
       )}
-      <div className="w-7/12 mx-auto py-10">
+      <div className="w-10/12 sm:w-7/12 mx-auto py-10">
         <div className="text-2xl font-bold">Guest Reservations</div>
         <div>
           {!orders ? (
@@ -121,20 +121,20 @@ const GuestsOrders = () => {
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="w-1/3 font-bold">First name:</td>
+                    <td className="w-1/2 font-bold">First name:</td>
                     <td>{order.guestFirstName}</td>
                   </tr>
                   <tr>
-                    <td className="w-1/3 font-bold">Last name:</td>
+                    <td className="w-1/2 font-bold">Last name:</td>
                     <td>{order.guestLastName}</td>
                   </tr>
                   <tr>
-                    <td className="w-1/3 font-bold">Room name:</td>
+                    <td className="w-1/2 font-bold">Room name:</td>
                     <td>{order.roomId.name}</td>
                   </tr>
 
                   <tr>
-                    <td className="w-1/3 font-bold">Move-in date:</td>
+                    <td className="w-1/2 font-bold">Move-in date:</td>
                     <td>
                       {formatInTimeZone(
                         order.dateMoveIn,
@@ -144,7 +144,7 @@ const GuestsOrders = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="w-1/3 font-bold">Move-out date:</td>
+                    <td className="w-1/2 font-bold">Move-out date:</td>
                     <td>
                       {" "}
                       {formatInTimeZone(
@@ -155,17 +155,17 @@ const GuestsOrders = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td className="w-1/3 font-bold">Nights: </td>
+                    <td className="w-1/2 font-bold">Nights: </td>
                     <td>
                       {calcNumNights(order.dateMoveOut, order.dateMoveIn)}
                     </td>
                   </tr>
                   <tr>
-                    <td className="w-1/3 font-bold">Price (night):</td>
+                    <td className="w-1/2 font-bold">Price (night):</td>
                     <td>${order.roomId.price.toFixed(2)}</td>
                   </tr>
                   <tr>
-                    <td className="w-1/3 font-bold">Total cost:</td>
+                    <td className="w-1/2 font-bold">Total cost:</td>
                     <td>${order.totalToPay.toFixed(2)}</td>
                   </tr>
                   <tr>
