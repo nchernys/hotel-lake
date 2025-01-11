@@ -65,10 +65,6 @@ function Navigation() {
               >
                 {item.label}
               </Link>
-              <FontAwesomeIcon
-                className="w-6 h-6 top-1/2 opacity-0 group-hover:translate-x-2 group-hover:opacity-100 transition-all duration-300 ease-in-out"
-                icon={faCaretRight}
-              />
             </div>
           ))}
         </div>
@@ -100,18 +96,17 @@ function Navigation() {
             )}
           </div>
           <div
-            className={`menu-dropdown absolute w-80 h-auto top-10 right-0 z-10 bg-slate-500 text-white rounded-2xl overflow-hidden shadow-2xl box-border ${
+            className={`menu-dropdown z-20 absolute w-80 h-auto top-10 right-0 bg-slate-500 text-white rounded-2xl overflow-hidden shadow-2xl box-border ${
               menuShow ? "block" : "hidden"
             }`}
           >
             {navLinks.map((item, i) => (
               <div
                 key={i}
-                className="relative p-10 border-b-1 border-gray-400 text-center overflow-hidden box-border group last:border-b-0"
+                className="p-6 xs:p-10 border-b-1 bg-slate-500 text-center overflow-hidden box-border group last:border-b-0"
               >
-                <div className="absolute w-20 h-20 bg-white rounded-full opacity-0 border border-white scale-1 animate-none transform group-hover:animate-expandBtn"></div>
                 <Link
-                  className="relative z-10"
+                  className=""
                   to={`${item.link}`}
                   onClick={handleLinkClick}
                 >

@@ -5,6 +5,7 @@ module.exports = {
   theme: {
     extend: {
       screens: {
+        xs: "350px",
         "2xl": "1400px",
       },
       boxShadow: {
@@ -37,7 +38,10 @@ module.exports = {
         250: "2.5",
         300: "3",
       },
-
+      fontFamily: {
+        meaCulpa: ["Mea Culpa", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
+      },
       keyframes: {
         expandBtn: {
           "0%": {
