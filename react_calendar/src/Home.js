@@ -59,20 +59,24 @@ const Home = () => {
 
   return (
     <>
-      <div className="home-image w-full h-[calc(99.5vh-3rem)] flex flex-col justify-center p-5 md:p-[5rem] lg:p-[10rem] lg:flex-row items-center relative z-1 overflow-hidden">
+      <div className="home-image w-full min-h-[600px] h-[calc(99.5vh-3rem)] flex flex-col justify-center p-5 md:p-[5rem] lg:p-[10rem] gap-4 sm:flex-row items-center relative z-1 overflow-hidden">
         <div
           ref={bgRef}
-          className="absolute w-full left-0 top-0 overflow-hidden"
+          className="absolute w-full h-full left-0 top-0 overflow-hidden"
         >
-          <img src="./images/hotel/hotel-home-5.webp" alt="home-hotel-image" />
+          <img
+            className="w-full h-full object-cover"
+            src="./images/hotel/hotel-home-5.webp"
+            alt="home-hotel-image"
+          />
         </div>
-        <div className="absolute left-0 top-0 w-full h-full bg-sky-600 opacity-40 sm:opacity-20 lg:opacity-10 z-0"></div>
-        <div className="flex flex-col w-full ps-5 text-7xl font-bold text-white md:w-1/2 md:items-center z-10">
+        <div className="absolute left-0 top-0 w-full h-full bg-sky-600 opacity-20 sm:opacity-20 lg:opacity-20 z-0"></div>
+        <div className="flex flex-col w-full ps-5 text-7xl font-bold text-white md:w-1/2  z-10">
           {["Mountain", "Lake", "Resort"].map((word, index) => (
             <span
               key={index}
               ref={(el) => (wordsRef.current[index] = el)}
-              className="font-meaCulpa font-extralight text-7xl xs:text-8xl sm:text-[10rem] sm:font-medium my-2 sm:my-4 opacity-0"
+              className="font-meaCulpa font-extralight text-7xl xs:text-8xl sm:text-[7rem] sm:font-medium my-2 sm:my-4 opacity-0 lg:text-[10rem]"
             >
               {word}
             </span>
@@ -86,7 +90,7 @@ const Home = () => {
             className="text-4xl font-serif font-semibold text-white md:flex md:justify-center relative overflow-visible xs:text-5xl sm:text-5xl"
             to="/choose-room"
           >
-            <Blob className="absolute w-full h-auto left-[50%] top-[50%] transform -translate-x-[50%] -translate-y-[50%]" />
+            <Blob className="absolute w-[22rem] h-auto md:w-[28rem] left-[50%] top-[50%] transform -translate-x-[50%] -translate-y-[50%]" />
             <span className="z-10 relative">Book</span>
           </Link>
         </div>
