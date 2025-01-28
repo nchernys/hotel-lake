@@ -75,14 +75,6 @@ body {
   opacity: 0;
 }
 
-.home-image {
-  background: url("../public/images/hotel/hotel-home-5.webp") no-repeat;
-  background-size: cover;
-  background-position: center;
-  width: 100vw;
-  height: calc(100vh - 45px);
-  position: relative;
-}
 
 .home-overlay-inner {
   background-color: rgb(0, 174, 255);
@@ -157,5 +149,56 @@ body {
 @media screen and (min-width: 1500px) {
   html {
     font-size: 20px;
+  }
+}
+
+.blob {
+  animation: rotate linear 8s infinite;
+  transform-origin: center;
+}
+
+.blob2 {
+  animation: rotate2 linear 8s infinite;
+  transform-origin: center;
+}
+
+.blob3 {
+  animation: rotate3 linear 8s infinite;
+  transform-origin: center;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes rotate2 {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-40deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes rotate3 {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }
